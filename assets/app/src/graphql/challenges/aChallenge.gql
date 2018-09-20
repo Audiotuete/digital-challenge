@@ -1,0 +1,8 @@
+query findChallenge($challengeCode: String!) {
+    findChallenge {
+      context
+      city
+      year
+      challengeCode
+    } 
+  }

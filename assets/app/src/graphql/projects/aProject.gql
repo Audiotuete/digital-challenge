@@ -1,0 +1,9 @@
+query projectData($projectCode: String!) {
+    projectData(projectCode: $projectCode) {
+      projectName
+      projectDescription
+      projectCode
+      projectCreator
+      challenge
+    } 
+  }

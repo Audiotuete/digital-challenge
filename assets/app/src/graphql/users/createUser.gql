@@ -1,10 +1,13 @@
-  mutation createUser($username: String!, $password: String!) {
+mutation createUser($challengeCode: String!, $username: String!, $email: String!, $password: String!) {
     createUser(
+      challengeCode: $challengeCode,
       username: $username,
+      email: $email,
       password: $password
     ) {
-      id
       username
+      email
+      challengeId
     }
   }
   

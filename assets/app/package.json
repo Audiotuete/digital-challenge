@@ -16,6 +16,7 @@
     "apollo-link": "^1.2.2",
     "apollo-link-context": "^1.0.8",
     "apollo-link-http": "^1.5.4",
+    "apollo-link-state": "^0.4.2",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.9.2",
     "screenfull": "^3.3.2",

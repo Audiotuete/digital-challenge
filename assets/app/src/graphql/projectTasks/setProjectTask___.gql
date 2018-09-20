@@ -1,0 +1,23 @@
+mutation updateProjectTaskMultiple($taskId ID!, $projectCode String!, $status Boolean!) { 
+    updateProjectTaskMultiple(
+      taskId: $taskId,
+      projectCode: $projectCode,
+      status: $status
+    ) {
+      firstTouched
+      lastTouched
+      countTouched
+      status
+      task {
+        id
+        taskText
+      }
+      submittedBy {
+        username
+      }
+      project {
+        projectCode
+        projectName
+      }
+    } 
+  }

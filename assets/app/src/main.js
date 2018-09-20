@@ -3,24 +3,43 @@ import VueRouter from 'vue-router'
 import VueYoutube from 'vue-youtube'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
+import { ApolloLink } from 'apollo-link'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { withClientState } from 'apollo-link-state';
+
 import VueApollo from 'vue-apollo'
 
 import App from './App.vue'
 
 import { routes } from './routes'
 
-const httpLink = new HttpLink({
-  // You should use an absolute URL here
-  // uri: 'https://fakerql.com/graphql'
-  uri: 'http://localhost:8000/graphql'
-// 
-})
 
-// Create the apollo client
+// Setup the apollo state management
+const app_cache = new InMemoryCache()
+
+const stateLink = withClientState({
+  app_cache,
+  resolvers: {
+
+  },
+  defaults: {
+    Challenge: {
+      __typename: 'Challenge',
+      id: 0,
+    },
+    Project: {
+      __typename: 'Project',
+      id: 0,
+    }
+  }
+})
+// Create the apollo client 
 const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
+  cache: app_cache, 
+  link: ApolloLink.from([
+    stateLink,
+    new HttpLink({uri: 'http://localhost:8000/graphql'})]
+  ),
   connectToDevTools: true,
 })
 
@@ -42,7 +61,6 @@ new Vue({
   el: '#app',
   router,
   apolloProvider,
-  // store,
   template: '<App/>',
   components: { App }
 })

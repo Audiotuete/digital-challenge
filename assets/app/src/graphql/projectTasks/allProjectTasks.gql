@@ -1,0 +1,29 @@
+query allProjectTasks($projectCode: String!) {
+    allProjectTasks(projectCode: $projectCode) {
+      ... on ProjectTask_A_Type {
+        task {
+          order
+          taskText
+        }
+      }	
+      ... on ProjectTask_B_Type{
+        task {
+          order
+          taskText
+        }
+      }
+      ... on ProjectTask_C_Type{
+        task {
+          order
+          taskText
+        }
+      }
+      project {
+        projectName
+      }
+      status
+      submittedBy {
+        username
+      }
+    }
+  }
