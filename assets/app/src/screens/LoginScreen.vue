@@ -2,9 +2,7 @@
 <template>
   <div>
     <Whitespace/>
-    <div class='login-header'>
-      Anmelden 
-    </div>
+    <Heading :level="1">Anmelden</Heading>
     <form id='login-form' class='login-form'  @submit.prevent='login()'>
       <label class='login-label' for='username'>Nutzername</label>
       <input name='username' v-model='username' @focus='inputIsFocused = true' type='text' class='login-input' placeholder='Peter Pan'/>
@@ -19,14 +17,19 @@
 </template>
 
 <script>
+import Heading from '../components/atoms/Heading'
 import Whitespace from '../components/layout/Whitespace'
 
+// GraphQL
 import GET_TOKEN from '../graphql/auth/getToken.gql'
 import CURRENT_USER from '../graphql/users/currentUser.gql'
 
 export default {
   name: 'login-screen',
-  components: {Whitespace},
+  components: {
+    Heading,
+    Whitespace
+  },
   data () {
     return {
       inputIsFocused: false,
@@ -83,18 +86,6 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-
-  .login-whiteroom {
-    height: 16vh;
-  }
-
-  .login-header {
-    display: flex;
-    text-align: center;
-    margin: 1.5rem 1rem 1rem 1rem;
-    font-size: 1.1rem;
-    font-weight: 300;
-  }
 
   .login-text {
     margin: 0rem 1.25rem 0 1.25rem;

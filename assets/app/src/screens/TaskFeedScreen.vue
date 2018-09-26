@@ -2,9 +2,9 @@
 <template>
   <div>
     <Whitespace/>
-    <div  class='task-feed-header'>
+    <Heading :level="1" v-show='!inputIsFocused'>
       Aufgabenliste
-    </div>
+    </Heading>
     <div class='task-feed-tablehead'>
       <span class='task-feed-tablehead-label'>Aufgabe</span>
       <span class='task-feed-tablehead-label'>Status</span>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import Heading from '../components/atoms/Heading'
 import Whitespace from '../components/layout/Whitespace'
 
 import ALL_PROJECT_TASKS from '../graphql/projectTasks/allProjectTasks.gql'
@@ -27,7 +28,10 @@ import CURRENT_USER from '../graphql/users/currentUser.gql'
 
 export default {
   name: 'task-feed-screen',
-  components: {Whitespace},
+  components: {
+    Heading,
+    Whitespace
+  },
   data () {
     return {
       allProjectTasks: []

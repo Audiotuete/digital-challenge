@@ -2,24 +2,32 @@
 <template>
   <div>
     <Whitespace/>
-    <div v-show='!inputIsFocused' class='register-project-header'>
+    <Heading :level="1" v-show='!inputIsFocused'>
       Einem Projekt per Code beitreten
-    </div>
+    </Heading>
+
     <button v-show='!inputIsFocused' @click='showEnterCodeModal = true' class='register-project-button-send'>Code eingeben</button>
 
     <div @click='showEnterCodeModal = false' :class='{ /* Make card not dragble while making notes */ "darken-background": showEnterCodeModal }'></div> 
     <div v-show='showEnterCodeModal' class='card '>
       <div class='modal-container'>
-        <div  class='register-project-header'><button class='modal-header-icon' @click='showEnterCodeModal = false'><i class='sl-icon icon-close'></i></button>Projekt-Code eingeben</div>
+        <!-- Extract close button from heading -->
+        <Heading :level="1">
+          <button class='modal-header-icon' @click='showEnterCodeModal = false'>
+            <i class='sl-icon icon-close'></i>
+          </button>
+          Projekt-Code eingeben
+        </Heading>
+
         <input @keyup='maxInput' v-model='projectCode' autocomplete='off' class='modal-input' maxlength='7' placeholder='XXXXXXX'/>
         <div  class='register-project-text'>Den Projektcode erfährst du vom Projektersteller oder Projektmitgliedern</div>
         <button @click='joinProject()' class='register-project-button-send'>Projekt beitreten</button>
       </div>
     </div>
-
-    <div class='register-project-header register-project-header__adjust'>
+ <!-- Whitespace instead of custom Style -->
+    <Heading :level="1" style="margin-top: 3rem; margin-bottom: 0.25rem;">
       Neues Projekt erstellen
-    </div>
+    </Heading>
     <form class='register-project-form' @submit.prevent='createProject()'>
       <label class='register-project-label' for='project-title'>Projektname</label>
       <input name='project-title' v-model='projectName' @focus='inputIsFocused = true' type='text' class='register-project-input' maxlength='28'/>
@@ -34,7 +42,9 @@
     <div :class='{ /* Make card not dragble while making notes */ "darken-background": showCreateSuccesModal }'></div> 
       <div v-show='showCreateSuccesModal' class='card '>
         <div class='modal-container'>
-          <div  class='register-project-header' style='padding-top: 0'>Projekt erfolgreich erstellt</div>
+          <Heading :level="1">
+            Projekt erfolgreich erstellt
+          </Heading>
           <div  class='register-project-text'><strong>{{ projectName }}</strong></div>
           <div  class='register-project-text'>{{ projectDescription }}</div>
           <label class='register-project-label register-project-label__code'>Project-Code</label>
@@ -47,15 +57,20 @@
 </template>
 
 <script>
+import Heading from '../components/atoms/Heading'
 import Whitespace from '../components/layout/Whitespace'
 
+// GraphQL
 import CREATE_PROJECT from '../graphql/projects/createProject.gql'  
 import JOIN_PROJECT from '../graphql/projects/joinProject.gql'
 import CURRENT_USER from '../graphql/users/currentUser.gql'
 
 export default {
   name: 'register-project-screen',
-  components: {Whitespace},
+  components:{
+    Heading,
+    Whitespace
+  },
   data () {
     return {
       showEnterCodeModal: false,
@@ -154,23 +169,6 @@ export default {
   height: 100vh;
   background: rgba(0, 0, 0, 0.75);
 }
-
-  .register-project-whiteroom {
-    height: 2rem;
-  }
-
-  .register-project-header {
-    display: flex;
-    text-align: center;
-    margin: 1.5rem 1rem 1rem 1rem;
-    font-size: 1.1rem;
-    font-weight: 300;
-
-    &__adjust {
-      margin-top: 3rem;
-      margin-bottom: 0.25rem;
-    }
-  }
 
   .register-project-text {
     margin: 0rem 1.25rem 0 1.25rem;

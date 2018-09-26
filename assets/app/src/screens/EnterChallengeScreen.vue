@@ -1,33 +1,36 @@
 
 <template>
   <div>
-      <Whitespace/>
-      <div  class='challenge-code-header'>
-        Willkommen zur Project-Challenge-App
-      </div>
-      <div class='challenge-code-text'>Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</div>
-      <input @keyup='maxInput' v-model='inputValue' autocomplete='off' @focus='inputIsFocused = true' class='challenge-code-input' maxlength='5' placeholder='XXXXX'/>
-      
-      <div class='challenge-code-text' v-if='aChallenge'>{{ aChallenge.context }}</div>
-      <div class='challenge-code-text' v-if='!aChallenge'>-</div>
+    <Whitespace/>
+    <Heading :level="1">Willkommen zur Project-Challenge-App</Heading>
+    <div class='challenge-code-text'>Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</div>
+    <input @keyup='maxInput' v-model='inputValue' autocomplete='off' @focus='inputIsFocused = true' class='challenge-code-input' maxlength='5' placeholder='XXXXX'/>
+    
+    <div class='challenge-code-text' v-if='aChallenge'>{{ aChallenge.context }}</div>
+    <div class='challenge-code-text' v-if='!aChallenge'>-</div>
 
-      <!-- <div class='challenge-code-show-question' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up challenge-code-show-question-icon'></i></div> -->
-      <button @click='submitCode()' class='challenge-code-button-send'>Beitreten</button>
-      <div class='challenge-code-whiteroom'></div>
-      <div  class='challenge-code-text'>Wenn du schon einen Challenge-Account hast kannst du dich einfach direkt anmelden.</div>
-      <button @click='goToLoginScreen()' class='challenge-code-button-send'>Anmelden</button>
+    <!-- <div class='challenge-code-show-question' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up challenge-code-show-question-icon'></i></div> -->
+    <button @click='submitCode()' class='challenge-code-button-send'>Beitreten</button>
+    <div class='challenge-code-whiteroom'></div>
+    <div  class='challenge-code-text'>Wenn du schon einen Challenge-Account hast kannst du dich einfach direkt anmelden.</div>
+    <button @click='goToLoginScreen()' class='challenge-code-button-send'>Anmelden</button>
   </div>
 </template>
 
 <script>
+import Heading from '../components/atoms/Heading'
 import Whitespace from '../components/layout/Whitespace'
 
+// GraphQL
 import A_CHALLENGE from '../graphql/challenges/aChallenge.gql'
 import CURRENT_USER from '../graphql/users/currentUser.gql'
 
 export default {
   name: 'join-challenge-screen',
-  components: {Whitespace},
+  components: {
+    Heading,
+    Whitespace
+  },
   data () {
     return {
       inputCount: 0,
@@ -93,14 +96,6 @@ export default {
 
   .challenge-code-whiteroom {
     height: 16vh;
-  }
-
-  .challenge-code-header {
-    display: flex;
-    text-align: center;
-    margin: 1.5rem 1rem 1rem 1rem;
-    font-size: 1.1rem;
-    font-weight: 300;
   }
 
   .challenge-code-text {

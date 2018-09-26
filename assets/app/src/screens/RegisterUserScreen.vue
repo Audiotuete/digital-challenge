@@ -2,9 +2,9 @@
 <template>
   <div>
     <Whitespace/>
-    <div v-show='!inputIsFocused' class='register-user-header'>
+    <Heading :level="1" v-show='!inputIsFocused'>
       Deine Kontaktdaten für die Challenge
-    </div>
+    </Heading>
     <div v-show='!inputIsFocused' class='register-user-text__privacy'>Deine Daten werden nicht an Dritte weitergegeben und nach der Challenge automatisch gelöscht!</div>
     <form class='register-user-form'  @submit.prevent='register()'>
       <label class='register-user-label' for='username'>Nutzername</label>
@@ -27,8 +27,10 @@
 </template>
 
 <script>
+import Heading from '../components/atoms/Heading'
 import Whitespace from '../components/layout/Whitespace'
 
+// GraphQL
 import CREATE_USER from '../graphql/users/createUser.gql'
 import GET_TOKEN from '../graphql/auth/getToken.gql'
 import CURRENT_USER from '../graphql/users/currentUser.gql'
@@ -37,7 +39,10 @@ import CURRENT_USER from '../graphql/users/currentUser.gql'
 
 export default {
   name: 'register-user-screen',
-  components: {Whitespace},
+  components: {
+    Heading,
+    Whitespace
+  },
   data () {
     return {
       inputIsFocused: false,
@@ -147,18 +152,6 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-
-  .register-user-whiteroom {
-    height: 16vh;
-  }
-
-  .register-user-header {
-    display: flex;
-    text-align: center;
-    margin: 1.5rem 1rem 1rem 1rem;
-    font-size: 1.1rem;
-    font-weight: 300;
-  }
 
   .register-user-text {
     margin: 0rem 1.25rem 0 1.25rem;
