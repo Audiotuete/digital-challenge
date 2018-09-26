@@ -1,23 +1,21 @@
 
 <template>
-  <div class="challenge-code-container">
+  <div>
       <Whitespace/>
-      <div  class="challenge-code-header">
+      <div  class='challenge-code-header'>
         Willkommen zur Project-Challenge-App
       </div>
-      <div class="challenge-code-text">Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</div>
-      <input @keyup="maxInput" v-model="inputValue" autocomplete="off" @focus="inputIsFocused = true" class="challenge-code-input" maxlength="5" placeholder="XXXXX"/>
+      <div class='challenge-code-text'>Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</div>
+      <input @keyup='maxInput' v-model='inputValue' autocomplete='off' @focus='inputIsFocused = true' class='challenge-code-input' maxlength='5' placeholder='XXXXX'/>
       
-      <div class="challenge-code-text" v-if="aChallenge">{{ aChallenge.context }}</div>
-      <div class="challenge-code-text" v-if="!aChallenge">-</div>
+      <div class='challenge-code-text' v-if='aChallenge'>{{ aChallenge.context }}</div>
+      <div class='challenge-code-text' v-if='!aChallenge'>-</div>
 
-      <!-- <div class="challenge-code-show-question" v-show="inputIsFocused" @click="inputIsFocused = false"><i  class="sl-icon icon-arrow-up challenge-code-show-question-icon"></i></div> -->
-      <button @click="submitCode()" class="challenge-code-button-send">Beitreten</button>
-      <div class="challenge-code-whiteroom"></div>
-      <div  class="challenge-code-text">Wenn du schon einen Challenge-Account hast kannst du dich einfach direkt anmelden.</div>
-      <button @click="goToLoginScreen()" class="challenge-code-button-send">Anmelden</button>
-
-
+      <!-- <div class='challenge-code-show-question' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up challenge-code-show-question-icon'></i></div> -->
+      <button @click='submitCode()' class='challenge-code-button-send'>Beitreten</button>
+      <div class='challenge-code-whiteroom'></div>
+      <div  class='challenge-code-text'>Wenn du schon einen Challenge-Account hast kannst du dich einfach direkt anmelden.</div>
+      <button @click='goToLoginScreen()' class='challenge-code-button-send'>Anmelden</button>
   </div>
 </template>
 
@@ -57,11 +55,11 @@ export default {
       if(this.aChallenge) {
         console.log(this.aChallenge)
         localStorage.setItem('63[CU^j>3=_UJuG', this.inputValue)
-        this.$router.push("/registeruser")
+        this.$router.push('/registeruser')
       }
     },
     goToLoginScreen() {
-      this.$router.push("/login")
+      this.$router.push('/login')
     },
     maxInput() {
       this.inputCount = this.inputValue.length
@@ -78,9 +76,9 @@ export default {
       // fetchPolicy: 'network-only'
     }).then((data) => {
       if(data.data.currentUser.currentProject) {
-        vm.$router.push("/taskfeed")
+        vm.$router.push('/taskfeed')
       } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
-        vm.$router.push("/login")
+        vm.$router.push('/login')
       }
     }).catch((error) => {
       console.log(error)
@@ -91,19 +89,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.challenge-code-container {
-    z-index: 50;
-    font-size: 1rem;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    flex: 1;
-    box-sizing: border-box;
-    padding: 0 3vw  5vh 3vw;
-  }
+<style scoped lang='scss'>
 
   .challenge-code-whiteroom {
     height: 16vh;
@@ -136,9 +122,9 @@ export default {
     height: 10vw;
     width: 10vw;
     background: #fff;
-    color: #E94F35;
+    color: $colorPrimary;
     border-radius: 50%;
-    border: 1px solid #E94F35;
+    border: 1px solid $colorPrimary;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
   }
 
@@ -166,7 +152,7 @@ export default {
   }
 
   .challenge-code-button-send {
-    background: #E94F35;
+    background: $colorPrimary;
     border: none;
     outline: none;
     width: 60vw;

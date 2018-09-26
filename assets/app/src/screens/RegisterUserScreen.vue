@@ -1,27 +1,27 @@
 
 <template>
-  <div class="register-user-container">
+  <div>
     <Whitespace/>
-    <div v-show="!inputIsFocused" class="register-user-header">
+    <div v-show='!inputIsFocused' class='register-user-header'>
       Deine Kontaktdaten für die Challenge
     </div>
-    <div v-show="!inputIsFocused" class="register-user-text__privacy">Deine Daten werden nicht an Dritte weitergegeben und nach der Challenge automatisch gelöscht!</div>
-    <form class="register-user-form"  @submit.prevent="register()">
-      <label class="register-user-label" for="username">Nutzername</label>
-      <input name="username" v-model="username" @focus="inputIsFocused = true" type="text" class="register-user-input" maxlength="15" placeholder="Peter Pan"/>
+    <div v-show='!inputIsFocused' class='register-user-text__privacy'>Deine Daten werden nicht an Dritte weitergegeben und nach der Challenge automatisch gelöscht!</div>
+    <form class='register-user-form'  @submit.prevent='register()'>
+      <label class='register-user-label' for='username'>Nutzername</label>
+      <input name='username' v-model='username' @focus='inputIsFocused = true' type='text' class='register-user-input' maxlength='15' placeholder='Peter Pan'/>
       
-      <label class="register-user-label" for="email">Mail-Adresse</label>
-      <input name="email" v-model="email" @focus="inputIsFocused = true" type="email" class="register-user-input" placeholder="peter.pan@gmail.de"/>
+      <label class='register-user-label' for='email'>Mail-Adresse</label>
+      <input name='email' v-model='email' @focus='inputIsFocused = true' type='email' class='register-user-input' placeholder='peter.pan@gmail.de'/>
       
-      <label class="register-user-label" style="margin-top: 1rem" for="password">Passwort</label>
-      <input name="password" v-model="password" @focus="inputIsFocused = true" type="password" class="register-user-input" minlength="8"/>
+      <label class='register-user-label' style='margin-top: 1rem' for='password'>Passwort</label>
+      <input name='password' v-model='password' @focus='inputIsFocused = true' type='password' class='register-user-input' minlength='8'/>
       
-      <label class="register-user-label" for="password-repeat">Passwort wiederholen</label>
-      <input name="password-repeat" v-model="passwordRepeat" @focus="inputIsFocused = true" type="password" class="register-user-input" minlength="8"/>
+      <label class='register-user-label' for='password-repeat'>Passwort wiederholen</label>
+      <input name='password-repeat' v-model='passwordRepeat' @focus='inputIsFocused = true' type='password' class='register-user-input' minlength='8'/>
 
-      <button type="submit" class="register-user-button-send">Account erstellen</button>
+      <button type='submit' class='register-user-button-send'>Account erstellen</button>
     </form>
-          <div class="register-user-show-button" v-show="inputIsFocused" @click="inputIsFocused = false"><i  class="sl-icon icon-arrow-up register-user-show-question-icon"></i></div>
+          <div class='register-user-show-button' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up register-user-show-question-icon'></i></div>
 
   </div>
 </template>
@@ -41,10 +41,10 @@ export default {
   data () {
     return {
       inputIsFocused: false,
-      username: "",
-      email: "",
-      password: "",
-      passwordRepeat: ""
+      username: '',
+      email: '',
+      password: '',
+      passwordRepeat: ''
     }
   },
   methods: {
@@ -84,7 +84,7 @@ export default {
         this.email = theEmail
 
         if (!challengeCode) {
-          this.$router.push("/")
+          this.$router.push('/')
         }
       })
     },
@@ -103,7 +103,7 @@ export default {
         const token = data.data.tokenAuth.token
         localStorage.setItem('/<Sj4z9X(Bf,{W', token)
         if (localStorage.getItem('/<Sj4z9X(Bf,{W')) {
-          this.$router.push("/registerproject")
+          this.$router.push('/registerproject')
         }
       }).catch((error) => {
         // Error
@@ -121,7 +121,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     if(!localStorage.getItem('63[CU^j>3=_UJuG')) {
-      next("/") 
+      next('/') 
     } else {
       next()
     }
@@ -133,9 +133,9 @@ export default {
       // fetchPolicy: 'network-only'
     }).then((data) => {
       if(data.data.currentUser.currentProject) {
-        vm.$router.push("/taskfeed")
+        vm.$router.push('/taskfeed')
       } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
-        vm.$router.push("/")
+        vm.$router.push('/')
       }
     }).catch((error) => {
       console.log(error)
@@ -146,19 +146,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.register-user-container {
-    z-index: 50;
-    font-size: 1rem;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    flex: 1;
-    box-sizing: border-box;
-    padding: 0 3vw  5vh 3vw;
-  }
+<style scoped lang='scss'>
 
   .register-user-whiteroom {
     height: 16vh;
@@ -197,9 +185,9 @@ export default {
     height: 10vw;
     width: 10vw;
     background: #fff;
-    color: #E94F35;
+    color: $colorPrimary;
     border-radius: 50%;
-    border: 1px solid #E94F35;
+    border: 1px solid $colorPrimary;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
   }
 
@@ -241,7 +229,7 @@ export default {
   }
 
   .register-user-button-send {
-    background: #E94F35;
+    background: $colorPrimary;
     border: none;
     outline: none;
     width: 60vw;

@@ -1,9 +1,9 @@
 
 <template>
-  <div>
-    <TaskProblem v-if="tasktype == 'TaskProblemType'" :task="task"/>
-    <TaskIdea v-if="tasktype == 'TaskIdeaType'" :task="task"/>
-    <TaskAction v-if="tasktype == 'TaskActionType'" :task="task"/>
+  <div > 
+    <TaskProblem v-if='tasktype == "TaskProblemType"' :task='task'/>
+    <TaskIdea v-if='tasktype == "TaskIdeaType"' :task='task'/>
+    <TaskAction v-if='tasktype == "TaskActionType"' :task='task'/>
   </div>
 </template>
 
@@ -26,8 +26,8 @@ export default {
       showCreateSuccesModal: false,
       // ------
       inputIsFocused: false,
-      projectName: "",
-      projectDescription: "",
+      projectName: '',
+      projectDescription: '',
     }
   },
   methods: {
@@ -43,7 +43,7 @@ export default {
         }
       }).then(() => {
         // Result
-        this.$router.push("/taskfeed")
+        this.$router.push('/taskfeed')
 
       }).catch((error) => {
         // Error
@@ -53,7 +53,7 @@ export default {
       })
     },
     goToProjectFeed() {
-      // this.$router.push("/taskfeed")
+      // this.$router.push('/taskfeed')
       console.log(this.projectTask)
     },
     maxInput() {
@@ -73,26 +73,13 @@ export default {
         
       }
     }).catch((error) => {
-      vm.$router.push("/")
+      vm.$router.push('/')
     })
     })   
   },
 }
 </script>
 
-<style scoped lang="scss">
-
-.task-container {
-    z-index: 50;
-    font-size: 1rem;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    flex: 1;
-    box-sizing: border-box;
-    padding: 0 3vw 5vh 3vw;
-  }
+<style scoped lang='scss'>
 
 </style>

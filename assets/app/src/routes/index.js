@@ -5,8 +5,6 @@ import RegisterProjectScreen from '../screens/RegisterProjectScreen'
 import TaskFeedScreen from '../screens/TaskFeedScreen'
 import TaskScreen from '../screens/TaskScreen'
 
-
-
 import TheNavbar from '../components/navbar/TheNavbar'
 import TheFooter from '../components/footer/TheFooter'
 

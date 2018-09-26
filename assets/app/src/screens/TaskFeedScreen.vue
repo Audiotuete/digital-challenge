@@ -1,20 +1,20 @@
 
 <template>
-  <div class="task-feed-container">
+  <div>
     <Whitespace/>
-    <div  class="task-feed-header">
+    <div  class='task-feed-header'>
       Aufgabenliste
     </div>
-    <div class="task-feed-tablehead">
-      <span class="task-feed-tablehead-label">Aufgabe</span>
-      <span class="task-feed-tablehead-label">Status</span>
+    <div class='task-feed-tablehead'>
+      <span class='task-feed-tablehead-label'>Aufgabe</span>
+      <span class='task-feed-tablehead-label'>Status</span>
     </div>
-    <div class="task-feed-list">
-    <div @click="goToTaskDetail(projectTask.task)" class="task-feed-item" v-for="projectTask in allProjectTasks" :key=projectTask.projectName>
-      <span class="task-feed-item-text">{{ projectTask.task.taskText }}</span>
-      <span class="task-feed-item-status">{{ projectTask.status }}</span>
+    <div class='task-feed-list'>
+    <div @click='goToTaskDetail(projectTask.task)' class='task-feed-item' v-for='projectTask in allProjectTasks' :key=projectTask.projectName>
+      <span class='task-feed-item-text'>{{ projectTask.task.taskText }}</span>
+      <span class='task-feed-item-status'>{{ projectTask.status }}</span>
     </div>
-    <a style="text-align:center;margin-top: 1rem;" href="https://plattform.bewirken.org">Videos für eure Projekte</a>
+    <a style='text-align:center;margin-top: 1rem;' href='https://plattform.bewirken.org'>Videos für eure Projekte</a>
     </div>
   </div>
 </template>
@@ -51,10 +51,10 @@ export default {
       fetchPolicy: 'network-only'
     }).then((data) => {
       if(!data.data.currentUser.currentProject) {
-        vm.$router.push("/registerproject")
+        vm.$router.push('/registerproject')
       }
     }).catch((error) => {
-      vm.$router.push("/")
+      vm.$router.push('/')
     })
     })   
   },
@@ -62,19 +62,7 @@ export default {
 
 </script>
 
-<style scoped lang="scss">
-.task-feed-container {
-    z-index: 50;
-    font-size: 1rem;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    flex: 1;
-    box-sizing: border-box;
-    padding: 0 3vw 5vh 3vw;
-  }
+<style scoped lang='scss'>
 
   .task-feed-whiteroom {
     height: 16vh;
@@ -148,9 +136,9 @@ export default {
     height: 10vw;
     width: 10vw;
     background: #fff;
-    color: #E94F35;
+    color: $colorPrimary;
     border-radius: 50%;
-    border: 1px solid #E94F35;
+    border: 1px solid $colorPrimary;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
   }
 
@@ -178,7 +166,7 @@ export default {
   }
 
   .task-feed-button-send {
-    background: #E94F35;
+    background: $colorPrimary;
     border: none;
     outline: none;
     width: 60vw;

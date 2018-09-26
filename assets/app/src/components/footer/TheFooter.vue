@@ -1,9 +1,9 @@
 <template>
-  <div class="footer">
-    <div class="menu-container">
-      <a class="footer-link">Datenschutz</a>
+  <div class='footer'>
+    <div class='menu-container'>
+      <a class='footer-link'>Datenschutz</a>
       |
-      <a class="footer-link">Impressum</a>
+      <a class='footer-link'>Impressum</a>
     </div>
   </div>
 </template>
@@ -14,7 +14,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 .footer {
   display: flex;
   justify-content: center;

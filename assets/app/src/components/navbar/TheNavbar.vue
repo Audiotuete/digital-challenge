@@ -1,9 +1,9 @@
 <template>
-  <div class="navbar">
-    <div class="menu-container">
-      <router-link  to="/"><i class="fa fa-cog"></i></router-link>
-      <router-link to="/"><i class="fa fa-stack-exchange"></i></router-link>
-      <router-link to="/"><i class="fa fa-book"></i></router-link>
+  <div class='navbar'>
+    <div class='menu-container'>
+      <router-link  to='/'><i class='fa fa-cog'></i></router-link>
+      <router-link to='/'><i class='fa fa-stack-exchange'></i></router-link>
+      <router-link to='/'><i class='fa fa-book'></i></router-link>
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 .navbar {
   z-index: 1000;
   display: flex;

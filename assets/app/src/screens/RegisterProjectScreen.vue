@@ -1,45 +1,45 @@
 
 <template>
-  <div class="register-project-container">
+  <div>
     <Whitespace/>
-    <div v-show="!inputIsFocused" class="register-project-header">
+    <div v-show='!inputIsFocused' class='register-project-header'>
       Einem Projekt per Code beitreten
     </div>
-    <button v-show="!inputIsFocused" @click="showEnterCodeModal = true" class="register-project-button-send">Code eingeben</button>
+    <button v-show='!inputIsFocused' @click='showEnterCodeModal = true' class='register-project-button-send'>Code eingeben</button>
 
-    <div @click="showEnterCodeModal = false" :class="{ /* Make card not dragble while making notes */ 'darken-background': showEnterCodeModal }"></div> 
-    <div v-show="showEnterCodeModal" class="card ">
-      <div class="modal-container">
-        <div  class="register-project-header"><button class="modal-header-icon" @click="showEnterCodeModal = false"><i class="sl-icon icon-close"></i></button>Projekt-Code eingeben</div>
-        <input @keyup="maxInput" v-model="projectCode" autocomplete="off" class="modal-input" maxlength="7" placeholder="XXXXXXX"/>
-        <div  class="register-project-text">Den Projektcode erfährst du vom Projektersteller oder Projektmitgliedern</div>
-        <button @click="joinProject()" class="register-project-button-send">Projekt beitreten</button>
+    <div @click='showEnterCodeModal = false' :class='{ /* Make card not dragble while making notes */ "darken-background": showEnterCodeModal }'></div> 
+    <div v-show='showEnterCodeModal' class='card '>
+      <div class='modal-container'>
+        <div  class='register-project-header'><button class='modal-header-icon' @click='showEnterCodeModal = false'><i class='sl-icon icon-close'></i></button>Projekt-Code eingeben</div>
+        <input @keyup='maxInput' v-model='projectCode' autocomplete='off' class='modal-input' maxlength='7' placeholder='XXXXXXX'/>
+        <div  class='register-project-text'>Den Projektcode erfährst du vom Projektersteller oder Projektmitgliedern</div>
+        <button @click='joinProject()' class='register-project-button-send'>Projekt beitreten</button>
       </div>
     </div>
 
-    <div class="register-project-header register-project-header__adjust">
+    <div class='register-project-header register-project-header__adjust'>
       Neues Projekt erstellen
     </div>
-    <form class="register-project-form" @submit.prevent="createProject()">
-      <label class="register-project-label" for="project-title">Projektname</label>
-      <input name="project-title" v-model="projectName" @focus="inputIsFocused = true" type="text" class="register-project-input" maxlength="28"/>
+    <form class='register-project-form' @submit.prevent='createProject()'>
+      <label class='register-project-label' for='project-title'>Projektname</label>
+      <input name='project-title' v-model='projectName' @focus='inputIsFocused = true' type='text' class='register-project-input' maxlength='28'/>
       
-      <label class="register-project-label" for="project-description">Projektbeschreibung</label>
-      <textarea class="register-project-input register-project-textarea" name="project-description" v-model="projectDescription" @focus="inputIsFocused = true" type="text" maxlength="80"/>
+      <label class='register-project-label' for='project-description'>Projektbeschreibung</label>
+      <textarea class='register-project-input register-project-textarea' name='project-description' v-model='projectDescription' @focus='inputIsFocused = true' type='text' maxlength='80'/>
 
-      <button type="submit" class="register-project-button-send">Projekt erstellen</button>
+      <button type='submit' class='register-project-button-send'>Projekt erstellen</button>
     </form>
-    <div class="register-project-show-button" v-show="inputIsFocused" @click="inputIsFocused = false"><i  class="icon-arrow-up register-project-show-question-icon"></i></div>
+    <div class='register-project-show-button' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='icon-arrow-up register-project-show-question-icon'></i></div>
   
-    <div :class="{ /* Make card not dragble while making notes */ 'darken-background': showCreateSuccesModal }"></div> 
-      <div v-show="showCreateSuccesModal" class="card ">
-        <div class="modal-container">
-          <div  class="register-project-header" style="padding-top: 0">Projekt erfolgreich erstellt</div>
-          <div  class="register-project-text"><strong>{{ projectName }}</strong></div>
-          <div  class="register-project-text">{{ projectDescription }}</div>
-          <label class="register-project-label register-project-label__code">Project-Code</label>
-          <div  class="register-project-code-display">{{ projectCode }}</div>
-          <button @click="goToProjectFeed()" class="register-project-button-send">Weiter</button>
+    <div :class='{ /* Make card not dragble while making notes */ "darken-background": showCreateSuccesModal }'></div> 
+      <div v-show='showCreateSuccesModal' class='card '>
+        <div class='modal-container'>
+          <div  class='register-project-header' style='padding-top: 0'>Projekt erfolgreich erstellt</div>
+          <div  class='register-project-text'><strong>{{ projectName }}</strong></div>
+          <div  class='register-project-text'>{{ projectDescription }}</div>
+          <label class='register-project-label register-project-label__code'>Project-Code</label>
+          <div  class='register-project-code-display'>{{ projectCode }}</div>
+          <button @click='goToProjectFeed()' class='register-project-button-send'>Weiter</button>
         </div>
       </div>
     </div>
@@ -60,11 +60,11 @@ export default {
     return {
       showEnterCodeModal: false,
       showCreateSuccesModal: false,
-      projectCode: "",
+      projectCode: '',
       // ------
       inputIsFocused: false,
-      projectName: "",
-      projectDescription: "",
+      projectName: '',
+      projectDescription: '',
     }
   },
   methods: {
@@ -80,7 +80,7 @@ export default {
         }
       }).then(() => {
         // Result
-        this.$router.push("/taskfeed")
+        this.$router.push('/taskfeed')
 
       }).catch((error) => {
         // Error
@@ -120,7 +120,7 @@ export default {
       })
     },
     goToProjectFeed() {
-      this.$router.push("/taskfeed")
+      this.$router.push('/taskfeed')
     },
     maxInput() {
       var max = 7; // The maxlength you want
@@ -136,17 +136,17 @@ export default {
       // fetchPolicy: 'network-only'
     }).then((data) => {
       if(data.data.currentUser.currentProject) {
-        vm.$router.push("/taskfeed")
+        vm.$router.push('/taskfeed')
       }
     }).catch((error) => {
-      vm.$router.push("/")
+      vm.$router.push('/')
     })
     })   
   },
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 
 .darken-background {
   position: absolute;
@@ -154,19 +154,6 @@ export default {
   height: 100vh;
   background: rgba(0, 0, 0, 0.75);
 }
-
-.register-project-container {
-    z-index: 50;
-    font-size: 1rem;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    flex: 1;
-    box-sizing: border-box;
-    padding: 0 3vw 5vh 3vw;
-  }
 
   .register-project-whiteroom {
     height: 2rem;
@@ -210,9 +197,9 @@ export default {
     height: 10vw;
     width: 10vw;
     background: #fff;
-    color: #E94F35;
+    color: $colorPrimary;
     border-radius: 50%;
-    border: 1px solid #E94F35;
+    border: 1px solid $colorPrimary;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
   }
 
@@ -271,7 +258,7 @@ export default {
   }
 
   .register-project-button-send {
-    background: #E94F35;
+    background: $colorPrimary;
     border: none;
     outline: none;
     width: 60vw;
@@ -296,7 +283,7 @@ export default {
   align-items: center;  
   background-color: #fff;
   border-radius: 1.5vh;
-  box-shadow: 0 0 15px 0 #E94F35;
+  box-shadow: 0 0 15px 0 $colorPrimary;
   overflow: hidden;
   padding-bottom: 1rem;
 
@@ -367,7 +354,7 @@ export default {
   background-color: rgba(255, 255, 255, .9);
 
   .fa-play {
-    color: #E94F35;
+    color: $colorPrimary;
     padding: 0.75vw 0 0 0.75vw;
   }
 }

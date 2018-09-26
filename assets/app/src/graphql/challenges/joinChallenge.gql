@@ -1,1 +1,1 @@
-# joinChallenge doesn't exist on its own but is done while "createUser" since every User needs an association to a Challenge.
+# joinChallenge doesn't exist on its own but is done while 'createUser' since every User needs an association to a Challenge.

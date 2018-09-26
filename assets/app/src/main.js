@@ -40,7 +40,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `JWT ${token}` : "",
+      authorization: token ? `JWT ${token}` : '',
     }
   }
 })
@@ -50,7 +50,7 @@ const apolloClient = new ApolloClient({
   cache: app_cache, 
   link: ApolloLink.from([
     authLink,
-    new HttpLink({uri: 'https://bwirken.org/graphql'})]
+    new HttpLink({uri: 'http://localhost:8000/graphql'})]
   ),
   connectToDevTools: true,
 })

@@ -1,20 +1,20 @@
 
 <template>
-  <div class="login-container">
+  <div>
     <Whitespace/>
-    <div class="login-header">
+    <div class='login-header'>
       Anmelden 
     </div>
-    <form id="login-form" class="login-form"  @submit.prevent="login()">
-      <label class="login-label" for="username">Nutzername</label>
-      <input name="username" v-model="username" @focus="inputIsFocused = true" type="text" class="login-input" placeholder="Peter Pan"/>
+    <form id='login-form' class='login-form'  @submit.prevent='login()'>
+      <label class='login-label' for='username'>Nutzername</label>
+      <input name='username' v-model='username' @focus='inputIsFocused = true' type='text' class='login-input' placeholder='Peter Pan'/>
       
-      <label class="login-label" for="password">Passwort</label>
-      <input name="password" v-model="password" @focus="inputIsFocused = true" type="password" class="login-input"/>
+      <label class='login-label' for='password'>Passwort</label>
+      <input name='password' v-model='password' @focus='inputIsFocused = true' type='password' class='login-input'/>
      
-      <button type="submit" form="login-form" class="login-button-send">Anmelden</button>
+      <button type='submit' form='login-form' class='login-button-send'>Anmelden</button>
     </form>
-          <!-- <div class="login-show-button" v-show="inputIsFocused" @click="inputIsFocused = false"><i  class="sl-icon icon-arrow-up login-show-question-icon"></i></div> -->
+          <!-- <div class='login-show-button' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up login-show-question-icon'></i></div> -->
   </div>
 </template>
 
@@ -54,7 +54,7 @@ export default {
         localStorage.setItem('/<Sj4z9X(Bf,{W', token)
         
         if (localStorage.getItem('/<Sj4z9X(Bf,{W')) {
-          this.$router.push("/taskfeed")
+          this.$router.push('/taskfeed')
         }
       }).catch((error) => {
         // Error
@@ -72,7 +72,7 @@ export default {
       // fetchPolicy: 'network-only'
     }).then((data) => {
       if(data.data.currentUser.currentProject) {
-        vm.$router.push("/taskfeed")
+        vm.$router.push('/taskfeed')
       }
     }).catch((error) => {
       console.log(error)
@@ -82,19 +82,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.login-container {
-    z-index: 50;
-    font-size: 1rem;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    flex: 1;
-    box-sizing: border-box;
-    padding: 0 3vw  5vh 3vw;
-  }
+<style scoped lang='scss'>
 
   .login-whiteroom {
     height: 16vh;
@@ -133,9 +121,9 @@ export default {
     height: 10vw;
     width: 10vw;
     background: #fff;
-    color: #E94F35;
+    color: $colorPrimary;
     border-radius: 50%;
-    border: 1px solid #E94F35;
+    border: 1px solid $colorPrimary;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
   }
 
@@ -177,7 +165,7 @@ export default {
   }
 
   .login-button-send {
-    background: #E94F35;
+    background: $colorPrimary;
     border: none;
     outline: none;
     width: 60vw;

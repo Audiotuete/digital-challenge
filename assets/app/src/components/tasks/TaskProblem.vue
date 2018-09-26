@@ -1,16 +1,16 @@
 <template>
-<div class="container">
+<div class='container'>
   <Whitespace/>
-  <div class="header">
-      <button class="header-icon" @click="back()"><i class="sl-icon icon-arrow-left"></i></button>
+  <div class='header'>
+      <button class='header-icon' @click='back()'><i class='sl-icon icon-arrow-left'></i></button>
       {{task.taskText}} 
   </div>
-    <form id="form" class="form"  @submit.prevent="sendData()">
+    <form id='form' class='form'  @submit.prevent='sendData()'>
 
-      <label class="label" for="action-3">Stichpunkte</label>
-      <textarea name="action-3" v-model="keywords" @focus="inputIsFocused = true" type="text" class="textfield" placeholder="Schreibe hier einfach 10 Stichwörter die dein Problem beschreiben"/>
+      <label class='label' for='action-3'>Stichpunkte</label>
+      <textarea name='action-3' v-model='keywords' @focus='inputIsFocused = true' type='text' class='textfield' placeholder='Schreibe hier einfach 10 Stichwörter die dein Problem beschreiben'/>
      
-      <button type="submit" form="form" class="button-send">Abschicken</button>
+      <button type='submit' form='form' class='button-send'>Abschicken</button>
     </form>
     </div>
 </template>
@@ -79,7 +79,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .container {
     z-index: 50;
     font-size: 1rem;
@@ -130,9 +130,9 @@ export default {
     height: 10vw;
     width: 10vw;
     background: #fff;
-    color: #E94F35;
+    color: $colorPrimary;
     border-radius: 50%;
-    border: 1px solid #E94F35;
+    border: 1px solid $colorPrimary;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
   }
 
@@ -174,7 +174,7 @@ export default {
   }
 
   .button-send {
-    background: #E94F35;
+    background: $colorPrimary;
     border: none;
     outline: none;
     width: 60vw;
