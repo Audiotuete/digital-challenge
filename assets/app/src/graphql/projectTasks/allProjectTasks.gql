@@ -1,26 +1,36 @@
-query allProjectTasks($projectCode: String!) {
-    allProjectTasks(projectCode: $projectCode) {
-      ... on ProjectTask_A_Type {
+# fragment Types on ProjectTask {
+#   ProjectTaskOpenType
+#   ProjectTaskMultipleType
+#   ProjectTaskYesOrNoType
+# }
+
+query allProjectTasks {
+    allProjectTasks {
+      ... on ProjectTaskProblemType {
         task {
+          id
           order
           taskText
         }
+
       }	
-      ... on ProjectTask_B_Type{
+      ... on ProjectTaskIdeaType{
         task {
+          id
           order
           taskText
         }
       }
-      ... on ProjectTask_C_Type{
+      ... on ProjectTaskActionType{
         task {
+          id
           order
           taskText
         }
       }
-      project {
-        projectName
-      }
+      # project {
+      #   projectName
+      # }
       status
       submittedBy {
         username

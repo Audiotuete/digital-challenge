@@ -1,0 +1,8 @@
+query allProjects() {
+    allProjects {
+      projectName
+      projectDescription
+      projectCreator
+      challenge
+    } 
+  }

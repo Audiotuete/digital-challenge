@@ -1,11 +1,11 @@
-mutation joinProject($user_name: String!, $projectCode: String!, $challengeCode: String!) {
+mutation joinProject($projectCode: String!) {
     joinProject(
-      username: $username,
-      projectCode: $projectCode,
-      challengeCode: $challengeCode
+      projectCode: $projectCode
     ) {
-      projectCode
-      projectName
-      year
+      project {
+        projectName
+        projectDescription
+        projectCode
+      }
     }
   }

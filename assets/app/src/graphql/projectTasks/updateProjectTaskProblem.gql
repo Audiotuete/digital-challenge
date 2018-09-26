@@ -1,0 +1,19 @@
+mutation updateProjectTaskProblem($taskId: ID!, $status: Boolean!, $keywords: String) { 
+    updateProjectTaskProblem(
+      taskId: $taskId,
+      status: $status,
+      keywords: $keywords
+    ) {
+      firstTouched
+      lastTouched
+      countTouched
+      status
+      task {
+        id
+        taskText
+      }
+      submittedBy {
+        username
+      }
+    } 
+  }

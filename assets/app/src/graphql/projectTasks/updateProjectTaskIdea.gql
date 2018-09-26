@@ -1,0 +1,21 @@
+mutation updateProjectTaskIdea($taskId: ID!, $status: Boolean!, $hashtag1: String, $hashtag2: String, $hashtag3: String) { 
+    updateProjectTaskIdea(
+      taskId: $taskId,
+      status: $status,
+      hashtag1: $hashtag1,
+      hashtag2: $hashtag2,
+      hashtag3: $hashtag3,
+    ) {
+      firstTouched
+      lastTouched
+      countTouched
+      status
+      task {
+        id
+        taskText
+      }
+      submittedBy {
+        username
+      }
+    } 
+  }

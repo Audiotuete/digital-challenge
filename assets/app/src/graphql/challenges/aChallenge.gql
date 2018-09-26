@@ -1,5 +1,5 @@
-query findChallenge($challengeCode: String!) {
-    findChallenge {
+query aChallenge($challengeCode: String!) {
+    aChallenge(challengeCode: $challengeCode) {
       context
       city
       year

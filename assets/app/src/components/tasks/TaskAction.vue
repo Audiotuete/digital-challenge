@@ -1,67 +1,77 @@
-
 <template>
-  <div class="login-container">
-    <Whitespace/>
-    <div class="login-header">
-      Anmelden 
-    </div>
-    <form id="login-form" class="login-form"  @submit.prevent="login()">
-      <label class="login-label" for="username">Nutzername</label>
-      <input name="username" v-model="username" @focus="inputIsFocused = true" type="text" class="login-input" placeholder="Peter Pan"/>
-      
-      <label class="login-label" for="password">Passwort</label>
-      <input name="password" v-model="password" @focus="inputIsFocused = true" type="password" class="login-input"/>
-     
-      <button type="submit" form="login-form" class="login-button-send">Anmelden</button>
-    </form>
-          <!-- <div class="login-show-button" v-show="inputIsFocused" @click="inputIsFocused = false"><i  class="sl-icon icon-arrow-up login-show-question-icon"></i></div> -->
+<div class="container">
+  <Whitespace/>
+  <div class="header">
+    <button class="header-icon" @click="back()"><i class="sl-icon icon-arrow-left"></i></button>
+    {{task.taskText}}
   </div>
+    <form id="form" class="form"  @submit.prevent="sendData()">
+      <label class="label" for="username">1. Aktion</label>
+      <input name="action-1" v-model="action_1" @focus="inputIsFocused = true" type="text" class="input">
+      
+      <label class="label" for="action-2">2. Aktion</label>
+      <input name="action-2" v-model="action_2" @focus="inputIsFocused = true" type="text" class="input"/>
+
+      <label class="label" for="action-3">3. Aktion</label>
+      <input name="action-3" v-model="action_3" @focus="inputIsFocused = true" type="text" class="input"/>
+     
+      <button type="submit" form="form" class="button-send">Abschicken</button>
+    </form>
+    </div>
 </template>
 
 <script>
-import Whitespace from '../components/layout/Whitespace'
+import Whitespace from '../layout/Whitespace'
 
-import GET_TOKEN from '../graphql/auth/getToken.gql'
-import CURRENT_USER from '../graphql/users/currentUser.gql'
+import UPDATE_PROJECT_TASK_ACTION from '../../graphql/projectTasks/updateProjectTaskAction.gql'
+import CURRENT_USER from '../../graphql/users/currentUser.gql'
 
 export default {
-  name: 'login-screen',
+  name: 'task-action',
   components: {Whitespace},
+  props: {
+    task: Object,
+  }, 
   data () {
     return {
       inputIsFocused: false,
-      username: '',
-      password: '',
+      action_1: '',
+      action_2: '',
+      action_3: '',
     }
   },
   methods: {
-    login() {
-      const theUsername = this.username
-      const thePassword = this.password
+    back() {
+      this.$router.go(-1)
+    },
+    sendData() {
+      const action1 = this.action_1
+      const action2 = this.action_2
+      const action3 = this.action_3
+      const taskId = this.task.id
 
-      this.username = ''
-      this.password = ''
+      this.action_1 = ''
+      this.action_2 = ''
+      this.action_3 = ''
       
       this.$apollo.mutate({
-        mutation: GET_TOKEN,
+        mutation: UPDATE_PROJECT_TASK_ACTION,
         variables: {
-          username: theUsername,
-          password: thePassword
+          taskId: taskId,
+          status: false,
+          action1: action1,
+          action2: action2,
+          action3: action3
         }
       }).then((data) => {
         // Result
-        const token = data.data.tokenAuth.token
-        localStorage.setItem('/<Sj4z9X(Bf,{W', token)
-        
-        if (localStorage.getItem('/<Sj4z9X(Bf,{W')) {
-          this.$router.push("/taskfeed")
-        }
       }).catch((error) => {
         // Error
         console.error(error)
         // We restore the initial user input
-        this.username = theUsername
-        this.password = thePassword
+        this.action_1 = action1
+        this.action_2 = action2
+        this.action_3 = action3
       })
     }
   },
@@ -71,9 +81,7 @@ export default {
       query: CURRENT_USER,
       // fetchPolicy: 'network-only'
     }).then((data) => {
-      if(data.data.currentUser.currentProject) {
-        vm.$router.push("/taskfeed")
-      }
+
     }).catch((error) => {
       console.log(error)
     })
@@ -83,7 +91,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.login-container {
+.container {
     z-index: 50;
     font-size: 1rem;
     display: flex;
@@ -96,11 +104,11 @@ export default {
     padding: 0 3vw  5vh 3vw;
   }
 
-  .login-whiteroom {
+  .whiteroom {
     height: 16vh;
   }
 
-  .login-header {
+  .header {
     display: flex;
     text-align: center;
     margin: 1.5rem 1rem 1rem 1rem;
@@ -108,7 +116,7 @@ export default {
     font-weight: 300;
   }
 
-  .login-text {
+  .text {
     margin: 0rem 1.25rem 0 1.25rem;
     font-size: 0.8rem;
     text-align: center;
@@ -123,7 +131,7 @@ export default {
     }
   }
 
-  .login-show-button {
+  .show-button {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -139,7 +147,7 @@ export default {
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
   }
 
-  .login-form {
+  .form {
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -148,13 +156,13 @@ export default {
     width: 70vw;
   }
 
-  .login-label {
+  .label {
     align-self: flex-start;
     font-size: 0.6rem;
     margin-top: 0.4rem
   }
 
-  .login-input {
+  .input {
     pointer-events: auto;
     display: flex;
     justify-content: flex-start;
@@ -176,7 +184,7 @@ export default {
     }
   }
 
-  .login-button-send {
+  .button-send {
     background: #E94F35;
     border: none;
     outline: none;
@@ -191,5 +199,13 @@ export default {
     margin-top: 1rem;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.25);
   }
+  .header-icon {
+    position: absolute;
+    left: 0.15rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    color: #555;
+  }
 
 </style>
+

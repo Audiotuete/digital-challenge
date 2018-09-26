@@ -237,9 +237,9 @@ export default {
     height: 10vw;
     width: 10vw;
     background: #fff;
-    color: #629EE4;
+    color: #E94F35;
     border-radius: 50%;
-    border: 1px solid #629EE4;
+    border: 1px solid #E94F35;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
   }
 
@@ -261,11 +261,11 @@ export default {
   }
 
   .note-button-send {
-    background: #4A90E2;
+    background: #E94F35;
     border: none;
     outline: none;
     width: 60vw;
-    height: 8vh;
+    height: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -300,7 +300,7 @@ export default {
   background-color: rgba(255, 255, 255, .9);
 
   .fa-play {
-    color: #629EE4;
+    color: #E94F35;
     padding: 0.75vw 0 0 0.75vw;
   }
 }

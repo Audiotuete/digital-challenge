@@ -1,0 +1,21 @@
+mutation updateProjectTaskAction($taskId: ID!, $status: Boolean!, $action1: String, $action2: String, $action3: String) { 
+    updateProjectTaskAction(
+      taskId: $taskId,
+      status: $status,
+      action1: $action1,
+      action2: $action2,
+      action3: $action3,
+    ) {
+      firstTouched
+      lastTouched
+      countTouched
+      status
+      # task {
+      #   id
+      #   taskText
+      # }
+      # submittedBy {
+      #   username
+      # }
+    } 
+  }

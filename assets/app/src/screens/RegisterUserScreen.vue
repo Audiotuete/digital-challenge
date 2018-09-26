@@ -1,0 +1,259 @@
+
+<template>
+  <div class="register-user-container">
+    <Whitespace/>
+    <div v-show="!inputIsFocused" class="register-user-header">
+      Deine Kontaktdaten für die Challenge
+    </div>
+    <div v-show="!inputIsFocused" class="register-user-text__privacy">Deine Daten werden nicht an Dritte weitergegeben und nach der Challenge automatisch gelöscht!</div>
+    <form class="register-user-form"  @submit.prevent="register()">
+      <label class="register-user-label" for="username">Nutzername</label>
+      <input name="username" v-model="username" @focus="inputIsFocused = true" type="text" class="register-user-input" maxlength="15" placeholder="Peter Pan"/>
+      
+      <label class="register-user-label" for="email">Mail-Adresse</label>
+      <input name="email" v-model="email" @focus="inputIsFocused = true" type="email" class="register-user-input" placeholder="peter.pan@gmail.de"/>
+      
+      <label class="register-user-label" style="margin-top: 1rem" for="password">Passwort</label>
+      <input name="password" v-model="password" @focus="inputIsFocused = true" type="password" class="register-user-input" minlength="8"/>
+      
+      <label class="register-user-label" for="password-repeat">Passwort wiederholen</label>
+      <input name="password-repeat" v-model="passwordRepeat" @focus="inputIsFocused = true" type="password" class="register-user-input" minlength="8"/>
+
+      <button type="submit" class="register-user-button-send">Account erstellen</button>
+    </form>
+          <div class="register-user-show-button" v-show="inputIsFocused" @click="inputIsFocused = false"><i  class="sl-icon icon-arrow-up register-user-show-question-icon"></i></div>
+
+  </div>
+</template>
+
+<script>
+import Whitespace from '../components/layout/Whitespace'
+
+import CREATE_USER from '../graphql/users/createUser.gql'
+import GET_TOKEN from '../graphql/auth/getToken.gql'
+import CURRENT_USER from '../graphql/users/currentUser.gql'
+
+
+
+export default {
+  name: 'register-user-screen',
+  components: {Whitespace},
+  data () {
+    return {
+      inputIsFocused: false,
+      username: "",
+      email: "",
+      password: "",
+      passwordRepeat: ""
+    }
+  },
+  methods: {
+    register() {
+      const theUsername = this.username
+      const theEmail = this.email
+      const thePassword = this.password
+      const thePasswordRepeat = this.passwordRepeat
+
+      this.username = ''
+      this.email = ''
+      this.password = ''
+      this.passwordRepeat = ''
+
+      const challengeCode = localStorage.getItem('63[CU^j>3=_UJuG')
+      
+      this.$apollo.mutate({
+        mutation: CREATE_USER,
+        variables: {
+          challengeCode: challengeCode,
+          username: theUsername,
+          email: theEmail,
+          password: thePassword,
+        }
+      }).then((data) => {
+        
+        this.username = theUsername
+        this.password = thePassword
+
+        this.login()
+
+      }).catch((error) => {
+        // Error
+        console.error(error)
+        // We restore the initial user input
+        this.username = theUsername
+        this.email = theEmail
+
+        if (!challengeCode) {
+          this.$router.push("/")
+        }
+      })
+    },
+    login() {
+      const theUsername = this.username
+      const thePassword = this.password
+      
+      this.$apollo.mutate({
+        mutation: GET_TOKEN,
+        variables: {
+          username: theUsername,
+          password: thePassword
+        }
+      }).then((data) => {
+        // Result
+        const token = data.data.tokenAuth.token
+        localStorage.setItem('/<Sj4z9X(Bf,{W', token)
+        if (localStorage.getItem('/<Sj4z9X(Bf,{W')) {
+          this.$router.push("/registerproject")
+        }
+      }).catch((error) => {
+        // Error
+        console.error(error)
+        // We restore the initial user input
+      })
+    },
+    // maxInput() {
+    //   var max = 7; // The maxlength you want
+    //   console.log(this.inputValue)
+    //   if(this.inputValue.length > max) {
+    //     this.inputValue = this.inputValue.substring(0, max);
+    //   }
+    // }
+  },
+  beforeRouteEnter(to, from, next) {
+    if(!localStorage.getItem('63[CU^j>3=_UJuG')) {
+      next("/") 
+    } else {
+      next()
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$apollo.query({
+      query: CURRENT_USER,
+      // fetchPolicy: 'network-only'
+    }).then((data) => {
+      if(data.data.currentUser.currentProject) {
+        vm.$router.push("/taskfeed")
+      } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
+        vm.$router.push("/")
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+    })   
+  },
+
+}
+</script>
+
+<style scoped lang="scss">
+.register-user-container {
+    z-index: 50;
+    font-size: 1rem;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1;
+    box-sizing: border-box;
+    padding: 0 3vw  5vh 3vw;
+  }
+
+  .register-user-whiteroom {
+    height: 16vh;
+  }
+
+  .register-user-header {
+    display: flex;
+    text-align: center;
+    margin: 1.5rem 1rem 1rem 1rem;
+    font-size: 1.1rem;
+    font-weight: 300;
+  }
+
+  .register-user-text {
+    margin: 0rem 1.25rem 0 1.25rem;
+    font-size: 0.8rem;
+    text-align: center;
+    color: #555555;
+    line-height: 1.3;
+    font-weight: 500;
+
+    &__privacy {
+      width: 80vw;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+  }
+
+  .register-user-show-button {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 7vh;
+    right: 3vw;
+    height: 10vw;
+    width: 10vw;
+    background: #fff;
+    color: #E94F35;
+    border-radius: 50%;
+    border: 1px solid #E94F35;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
+  }
+
+  .register-user-form {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70vw;
+  }
+
+  .register-user-label {
+    align-self: flex-start;
+    font-size: 0.6rem;
+    margin-top: 0.4rem
+  }
+
+  .register-user-input {
+    pointer-events: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 2.5rem;
+    margin-top: 0.1rem;
+    font-size: 0.9rem;
+    font-weight: 300;
+    padding-left: 0.75rem;
+    font-family: 'Open Sans';
+    box-sizing: border-box;
+    background: #FEFEFE;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.25);
+    border-radius: 0.75vw;
+
+    &::placeholder {
+      color: #DDDDDD;
+    }
+  }
+
+  .register-user-button-send {
+    background: #E94F35;
+    border: none;
+    outline: none;
+    width: 60vw;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 1vh;
+    margin-top: 1rem;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.25);
+  }
+
+</style>

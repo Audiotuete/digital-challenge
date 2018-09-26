@@ -5,9 +5,16 @@ mutation createUser($challengeCode: String!, $username: String!, $email: String!
       email: $email,
       password: $password
     ) {
-      username
-      email
-      challengeId
+      user {
+        username
+        currentProject {
+          projectName
+        }
+        currentChallenge {
+          context
+        }
+        email
+        password
+      }
     }
   }
-  

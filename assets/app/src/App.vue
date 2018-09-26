@@ -16,7 +16,7 @@
 <script>
 import screenfull from 'screenfull'
 
-import ALL_USERS from './graphql/users/allUsers.gql'
+// import ALL_USERS from './graphql/users/allUsers.gql'
 
 export default {
 
@@ -24,14 +24,14 @@ export default {
   components: {},
   data () {
     return {
-      users: []
+      allUsers: []
     }
   },
-  apollo: {
-    allUsers: {
-      query: ALL_USERS
-    } 
-  },
+  // apollo: {
+  //   allUsers: {
+  //     query: ALL_USERS,
+  //   }
+  // },
   methods: {
     enterFullscreen () {
       // if (screenfull.enabled && screenfull.isFullscreen == false ) {
@@ -56,7 +56,7 @@ body {
   font-size: 2rem;
 
   a {
-  color: transparent;
+  color: #323232;
   cursor: default;
   text-decoration: none;
   } 

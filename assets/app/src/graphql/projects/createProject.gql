@@ -1,13 +1,15 @@
-mutation createProject($projectName: String!, $projectDescription: String!, $username: String!, $challengeCode: String!) {
+mutation createProject($projectName: String!, $projectDescription: String!) {
     createProject(
-      username: $username,
       projectName: $projectName,
       projectDescription: $projectDescription,
-      challengeCode: $challengeCode
     ) {
-      projectName
-      projectDescription
-      projectCreator
-      projectCode
+      project {
+        projectName
+        projectDescription
+        projectCreator {
+          username
+        }
+        projectCode
+      }
     }
   }

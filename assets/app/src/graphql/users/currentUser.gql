@@ -1,0 +1,13 @@
+query currentUser {
+    currentUser {
+      username
+      email
+      dateJoined
+      currentChallenge {
+        id
+      }
+      currentProject {
+        id
+      }
+    } 
+  }

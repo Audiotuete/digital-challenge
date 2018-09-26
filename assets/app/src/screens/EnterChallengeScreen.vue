@@ -1,49 +1,92 @@
 
 <template>
   <div class="challenge-code-container">
-      
+      <Whitespace/>
       <div  class="challenge-code-header">
         Willkommen zur Project-Challenge-App
       </div>
-      <div  class="challenge-code-text">Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</div>
-      <input @keyup="maxInput" v-model="inputValue" @focus="inputIsFocused = true" class="challenge-code-input" maxlength="7" placeholder="XXXXXXX"/>
+      <div class="challenge-code-text">Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</div>
+      <input @keyup="maxInput" v-model="inputValue" autocomplete="off" @focus="inputIsFocused = true" class="challenge-code-input" maxlength="5" placeholder="XXXXX"/>
+      
+      <div class="challenge-code-text" v-if="aChallenge">{{ aChallenge.context }}</div>
+      <div class="challenge-code-text" v-if="!aChallenge">-</div>
+
       <!-- <div class="challenge-code-show-question" v-show="inputIsFocused" @click="inputIsFocused = false"><i  class="sl-icon icon-arrow-up challenge-code-show-question-icon"></i></div> -->
       <button @click="submitCode()" class="challenge-code-button-send">Beitreten</button>
       <div class="challenge-code-whiteroom"></div>
       <div  class="challenge-code-text">Wenn du schon einen Challenge-Account hast kannst du dich einfach direkt anmelden.</div>
-      <button @click="login()" class="challenge-code-button-send">Anmelden</button>
+      <button @click="goToLoginScreen()" class="challenge-code-button-send">Anmelden</button>
 
 
   </div>
 </template>
 
 <script>
-// import VueSwing from 'vue-swing'
+import Whitespace from '../components/layout/Whitespace'
+
+import A_CHALLENGE from '../graphql/challenges/aChallenge.gql'
+import CURRENT_USER from '../graphql/users/currentUser.gql'
 
 export default {
   name: 'join-challenge-screen',
-  components: {},
+  components: {Whitespace},
   data () {
     return {
+      inputCount: 0,
       inputIsFocused: false,
-      inputValue: ""
+      inputValue: '',
+      aChallenge: undefined,
+    }
+  },
+  apollo: {
+    aChallenge: {
+      query: A_CHALLENGE,
+      variables() {
+        return {
+          challengeCode: this.inputValue
+        } 
+      },
+      fetchPolicy: 'network-only',
+      skip() {
+        return this.inputCount < 5
+      },
     }
   },
   methods: {
     submitCode() {
-
+      if(this.aChallenge) {
+        console.log(this.aChallenge)
+        localStorage.setItem('63[CU^j>3=_UJuG', this.inputValue)
+        this.$router.push("/registeruser")
+      }
     },
-    login() {
-
+    goToLoginScreen() {
+      this.$router.push("/login")
     },
     maxInput() {
-      var max = 7; // The maxlength you want
-      console.log(this.inputValue)
+      this.inputCount = this.inputValue.length
+      var max = 5; // The maxlength you want
       if(this.inputValue.length > max) {
         this.inputValue = this.inputValue.substring(0, max);
       }
     }
-  }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$apollo.query({
+      query: CURRENT_USER,
+      // fetchPolicy: 'network-only'
+    }).then((data) => {
+      if(data.data.currentUser.currentProject) {
+        vm.$router.push("/taskfeed")
+      } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
+        vm.$router.push("/login")
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+    })   
+  },
 
 }
 </script>
@@ -59,7 +102,7 @@ export default {
     align-items: center;
     flex: 1;
     box-sizing: border-box;
-    padding: 5vh 3vw  5vh 3vw;
+    padding: 0 3vw  5vh 3vw;
   }
 
   .challenge-code-whiteroom {
@@ -93,9 +136,9 @@ export default {
     height: 10vw;
     width: 10vw;
     background: #fff;
-    color: #629EE4;
+    color: #E94F35;
     border-radius: 50%;
-    border: 1px solid #629EE4;
+    border: 1px solid #E94F35;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
   }
 
@@ -123,11 +166,11 @@ export default {
   }
 
   .challenge-code-button-send {
-    background: #4A90E2;
+    background: #E94F35;
     border: none;
     outline: none;
     width: 60vw;
-    height: 8vh;
+    height: 45px;
     display: flex;
     justify-content: center;
     align-items: center;

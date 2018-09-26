@@ -1,5 +1,5 @@
-query projectData($projectCode: String!) {
-    projectData(projectCode: $projectCode) {
+query aProject($projectCode: String!) {
+    aProject(projectCode: $projectCode) {
       projectName
       projectDescription
       projectCode
