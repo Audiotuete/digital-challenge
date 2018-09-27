@@ -75,22 +75,22 @@ export default {
       }
     }
   },
-  // beforeRouteEnter(to, from, next) {
-  //   next(vm => {
-  //     vm.$apollo.query({
-  //     query: CURRENT_USER,
-  //     // fetchPolicy: 'network-only'
-  //   }).then((data) => {
-  //     if(data.data.currentUser.currentProject) {
-  //       vm.$router.push('/taskfeed')
-  //     } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
-  //       vm.$router.push('/login')
-  //     }
-  //   }).catch((error) => {
-  //     console.log(error)
-  //   })
-  //   })   
-  // },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$apollo.query({
+      query: CURRENT_USER,
+      // fetchPolicy: 'network-only'
+    }).then((data) => {
+      if(data.data.currentUser.currentProject) {
+        vm.$router.push('/taskfeed')
+      } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
+        vm.$router.push('/login')
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+    })   
+  },
 
 }
 </script>

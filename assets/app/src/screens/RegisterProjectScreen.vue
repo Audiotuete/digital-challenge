@@ -29,10 +29,10 @@
       Neues Projekt erstellen
     </Heading>
     <form class='register-project-form' @submit.prevent='createProject()'>
-      <label class='register-project-label' for='project-title'>Projektname</label>
+      <FormLabel>Projektname</FormLabel>
       <input name='project-title' v-model='projectName' @focus='inputIsFocused = true' type='text' class='register-project-input' maxlength='28'/>
       
-      <label class='register-project-label' for='project-description'>Projektbeschreibung</label>
+      <FormLabel>Projektbeschreibung</FormLabel>      
       <textarea class='register-project-input register-project-textarea' name='project-description' v-model='projectDescription' @focus='inputIsFocused = true' type='text' maxlength='80'/>
 
       <button type='submit' class='register-project-button-send'>Projekt erstellen</button>
@@ -47,7 +47,7 @@
           </Heading>
           <Paragraph><strong>{{ projectName }}</strong></Paragraph>
           <Paragraph>{{ projectDescription }}</Paragraph>
-          <label class='register-project-label register-project-label__code'>Project-Code</label>
+          <div class='register-project-label register-project-label__code'>Project-Code</div>
           <div  class='register-project-code-display'>{{ projectCode }}</div>
           <button @click='goToProjectFeed()' class='register-project-button-send'>Weiter</button>
         </div>
@@ -59,6 +59,7 @@
 <script>
 import Heading from '../components/atoms/Heading'
 import Paragraph from '../components/atoms/Paragraph'
+import FormLabel from '../components/atoms/FormLabel'
 import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
@@ -71,6 +72,7 @@ export default {
   components:{
     Heading,
     Paragraph,
+    FormLabel,
     Whitespace
   },
   data () {
@@ -146,20 +148,20 @@ export default {
       }
     }
   },
-  // beforeRouteEnter(to, from, next) {
-  //   next(vm => {
-  //     vm.$apollo.query({
-  //     query: CURRENT_USER,
-  //     // fetchPolicy: 'network-only'
-  //   }).then((data) => {
-  //     if(data.data.currentUser.currentProject) {
-  //       vm.$router.push('/taskfeed')
-  //     }
-  //   }).catch((error) => {
-  //     vm.$router.push('/')
-  //   })
-  //   })   
-  // },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$apollo.query({
+      query: CURRENT_USER,
+      // fetchPolicy: 'network-only'
+    }).then((data) => {
+      if(data.data.currentUser.currentProject) {
+        vm.$router.push('/taskfeed')
+      }
+    }).catch((error) => {
+      vm.$router.push('/')
+    })
+    })   
+  },
 }
 </script>
 

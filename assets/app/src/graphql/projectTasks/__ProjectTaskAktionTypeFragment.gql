@@ -1,0 +1,10 @@
+fragment ProjectTaskActionType on ProjectTaskActionType{
+  task {
+    id
+    order
+    taskText
+  }
+  action1
+  action2
+  action3
+}

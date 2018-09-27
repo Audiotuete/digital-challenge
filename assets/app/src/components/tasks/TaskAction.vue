@@ -3,7 +3,7 @@
   <Whitespace/>
   <div class='header'>
     <button class='header-icon' @click='back()'><i class='sl-icon icon-arrow-left'></i></button>
-    {{task.taskText}}
+    {{projectTask.task.taskText}}
   </div>
     <form id='form' class='form'  @submit.prevent='sendData()'>
       <label class='label' for='username'>1. Aktion</label>
@@ -30,25 +30,25 @@ export default {
   name: 'task-action',
   components: {Whitespace},
   props: {
-    task: Object,
+    projectTask: Object,
   }, 
   data () {
     return {
       inputIsFocused: false,
-      action_1: '',
-      action_2: '',
-      action_3: '',
+      action_1: this.projectTask.action1,
+      action_2: this.projectTask.action2,
+      action_3: this.projectTask.action3,
     }
   },
   methods: {
     back() {
-      this.$router.push('/taskscreen')
+      this.$router.push('/taskfeed')
     },
     sendData() {
       const action1 = this.action_1
       const action2 = this.action_2
       const action3 = this.action_3
-      const taskId = this.task.id
+      const taskId = this.projectTask.task.id
 
       this.action_1 = ''
       this.action_2 = ''
@@ -65,6 +65,7 @@ export default {
         }
       }).then((data) => {
         // Result
+        this.$router.push('/taskfeed')
       }).catch((error) => {
         // Error
         console.error(error)
@@ -75,18 +76,18 @@ export default {
       })
     }
   },
-  // beforeRouteEnter(to, from, next) {
-  //   next(vm => {
-  //     vm.$apollo.query({
-  //     query: CURRENT_USER,
-  //     // fetchPolicy: 'network-only'
-  //   }).then((data) => {
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$apollo.query({
+      query: CURRENT_USER,
+      // fetchPolicy: 'network-only'
+    }).then((data) => {
 
-  //   }).catch((error) => {
-  //     console.log(error)
-  //   })
-  //   })   
-  // }
+    }).catch((error) => {
+      console.log(error)
+    })
+    })   
+  }
 }
 </script>
 

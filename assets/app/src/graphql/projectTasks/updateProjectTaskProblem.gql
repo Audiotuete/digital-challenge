@@ -1,7 +1,6 @@
-mutation updateProjectTaskProblem($taskId: ID!, $status: Boolean!, $keywords: String) { 
+mutation updateProjectTaskProblem($taskId: ID!, $keywords: String) { 
     updateProjectTaskProblem(
       taskId: $taskId,
-      status: $status,
       keywords: $keywords
     ) {
       firstTouched

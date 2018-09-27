@@ -7,16 +7,16 @@
     </Heading>
     <Paragraph v-show='!inputIsFocused'>Deine Daten werden nicht an Dritte weitergegeben und nach der Challenge automatisch gelöscht!</Paragraph>
     <form class='register-user-form'  @submit.prevent='register()'>
-      <label class='register-user-label' for='username'>Nutzername</label>
+      <FormLabel>Nutzername</FormLabel>
       <input name='username' v-model='username' @focus='inputIsFocused = true' type='text' class='register-user-input' maxlength='15' placeholder='Peter Pan'/>
       
-      <label class='register-user-label' for='email'>Mail-Adresse</label>
+      <FormLabel>Mail-Adresse</FormLabel>
       <input name='email' v-model='email' @focus='inputIsFocused = true' type='email' class='register-user-input' placeholder='peter.pan@gmail.de'/>
       
-      <label class='register-user-label' style='margin-top: 1rem' for='password'>Passwort</label>
+      <FormLabel style='margin-top: 1rem'>Passwort</FormLabel>
       <input name='password' v-model='password' @focus='inputIsFocused = true' type='password' class='register-user-input' minlength='8'/>
       
-      <label class='register-user-label' for='password-repeat'>Passwort wiederholen</label>
+      <FormLabel>Passwort wiederholen</FormLabel>
       <input name='password-repeat' v-model='passwordRepeat' @focus='inputIsFocused = true' type='password' class='register-user-input' minlength='8'/>
 
       <button type='submit' class='register-user-button-send'>Account erstellen</button>
@@ -29,6 +29,7 @@
 <script>
 import Heading from '../components/atoms/Heading'
 import Paragraph from '../components/atoms/Paragraph'
+import FormLabel from '../components/atoms/FormLabel'
 import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
@@ -41,7 +42,8 @@ export default {
   name: 'register-user-screen',
   components: {
     Heading,
-    Paragraph,    
+    Paragraph,
+    FormLabel,  
     Whitespace
   },
   data () {
@@ -125,22 +127,22 @@ export default {
     //   }
     // }
   },
-  // beforeRouteEnter(to, from, next) {
-  //   next(vm => {
-  //     vm.$apollo.query({
-  //     query: CURRENT_USER,
-  //     // fetchPolicy: 'network-only'
-  //   }).then((data) => {
-  //     if(data.data.currentUser.currentProject) {
-  //       vm.$router.push('/taskfeed')
-  //     } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
-  //       vm.$router.push('/')
-  //     }
-  //   }).catch((error) => {
-  //     console.log(error)
-  //   })
-  //   })   
-  // },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$apollo.query({
+      query: CURRENT_USER,
+      // fetchPolicy: 'network-only'
+    }).then((data) => {
+      if(data.data.currentUser.currentProject) {
+        vm.$router.push('/taskfeed')
+      } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
+        vm.$router.push('/')
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+    })   
+  },
 
 }
 </script>
@@ -170,12 +172,6 @@ export default {
     justify-content: center;
     align-items: center;
     width: 70vw;
-  }
-
-  .register-user-label {
-    align-self: flex-start;
-    font-size: 0.6rem;
-    margin-top: 0.4rem
   }
 
   .register-user-input {

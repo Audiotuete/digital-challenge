@@ -1,14 +1,15 @@
 
 <template>
-  <div > 
-    <TaskProblem v-if='tasktype == "TaskProblemType"' :task='task'/>
-    <TaskIdea v-if='tasktype == "TaskIdeaType"' :task='task'/>
-    <TaskAction v-if='tasktype == "TaskActionType"' :task='task'/>
+  <div> 
+    <TaskProblem v-if='tasktype == "ProjectTaskProblemType"' :projectTask='task'/>
+    <TaskIdea v-else-if='tasktype == "ProjectTaskIdeaType"' :projectTask='task'/>
+    <TaskAction v-else-if='tasktype == "ProjectTaskActionType"' :projectTask='task'/>
   </div>
 </template>
 
 <script>
 import Whitespace from '../components/layout/Whitespace'
+
 import TaskProblem from '../components/tasks/TaskProblem'
 import TaskIdea from '../components/tasks/TaskIdea'
 import TaskAction from '../components/tasks/TaskAction'
@@ -31,30 +32,8 @@ export default {
     }
   },
   methods: {
-    joinProject() {
-      const theProjectCode = this.projectCode
-
-      this.projectCode = ''
-      
-      this.$apollo.mutate({
-        mutation: JOIN_PROJECT,
-        variables: {
-          projectCode: theProjectCode,
-        }
-      }).then(() => {
-        // Result
-        this.$router.push('/taskfeed')
-
-      }).catch((error) => {
-        // Error
-        console.error(error)
-        // We restore the initial user input
-        this.projectCode = theProjectCode
-      })
-    },
     goToProjectFeed() {
-      // this.$router.push('/taskfeed')
-      console.log(this.projectTask)
+      this.$router.push('/taskfeed')
     },
     maxInput() {
       var max = 7; // The maxlength you want

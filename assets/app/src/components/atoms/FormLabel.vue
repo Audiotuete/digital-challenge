@@ -19,7 +19,7 @@ export default {
 <style lang="scss" scoped>
   label {
     align-self: flex-start;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     margin-top: 0.4rem
   }
 </style>

@@ -70,39 +70,24 @@ export default {
       })
     }
   },
-  // beforeRouteEnter(to, from, next) {
-  //   next(vm => {
-  //     vm.$apollo.query({
-  //     query: CURRENT_USER,
-  //     // fetchPolicy: 'network-only'
-  //   }).then((data) => {
-  //     if(data.data.currentUser.currentProject) {
-  //       vm.$router.push('/taskfeed')
-  //     }
-  //   }).catch((error) => {
-  //     console.log(error)
-  //   })
-  //   })   
-  // }
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$apollo.query({
+      query: CURRENT_USER,
+      // fetchPolicy: 'network-only'
+    }).then((data) => {
+      if(data.data.currentUser.currentProject) {
+        vm.$router.push('/taskfeed')
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+    })   
+  }
 }
 </script>
 
 <style scoped lang='scss'>
-
-  .login-text {
-    margin: 0rem 1.25rem 0 1.25rem;
-    font-size: 0.8rem;
-    text-align: center;
-    color: #555555;
-    line-height: 1.3;
-    font-weight: 500;
-
-    &__privacy {
-      width: 80vw;
-      text-align: center;
-      font-size: 0.8rem;
-    }
-  }
 
   .login-show-button {
     position: absolute;
@@ -127,12 +112,6 @@ export default {
     justify-content: center;
     align-items: center;
     width: 70vw;
-  }
-
-  .login-label {
-    align-self: flex-start;
-    font-size: 0.6rem;
-    margin-top: 0.4rem
   }
 
   .login-input {

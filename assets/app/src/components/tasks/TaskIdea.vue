@@ -3,7 +3,7 @@
   <Whitespace/>
   <div class='header'>
       <button class='header-icon' @click='back()'><i class='sl-icon icon-arrow-left'></i></button>
-      {{task.taskText}}
+      {{projectTask.task.taskText}}
   </div>
     <form id='form' class='form'  @submit.prevent='sendData()'>
       <label class='label' for='username'>Hashtag#1</label>
@@ -30,25 +30,25 @@ export default {
   name: 'task-action',
   components: {Whitespace},
   props: {
-    task: Object,
+    projectTask: Object,
   }, 
   data () {
     return {
       inputIsFocused: false,
-      hashtag_1: '',
-      hashtag_2: '',
-      hashtag_3: '',
+      hashtag_1: this.projectTask.hashtag1,
+      hashtag_2: this.projectTask.hashtag2,
+      hashtag_3: this.projectTask.hashtag3,
     }
   },
   methods: {
     back() {
-      this.$router.go(-1)
+      this.$router.push('/taskfeed')
     },
     sendData() {
       const hashtag1 = this.hashtag_1
       const hashtag2 = this.hashtag_2
       const hashtag3 = this.hashtag_3
-      const taskId = this.task.id
+      const taskId = this.projectTask.task.id
 
       this.hashtag_1 = ''
       this.hashtag_2 = ''
@@ -65,6 +65,7 @@ export default {
         }
       }).then((data) => {
         // Result
+        this.$router.push('/taskfeed')
       }).catch((error) => {
         // Error
         console.error(error)

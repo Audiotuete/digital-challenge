@@ -3,7 +3,7 @@
   <Whitespace/>
   <div class='header'>
       <button class='header-icon' @click='back()'><i class='sl-icon icon-arrow-left'></i></button>
-      {{task.taskText}} 
+      {{projectTask.task.taskTextt}} 
   </div>
     <form id='form' class='form'  @submit.prevent='sendData()'>
 
@@ -25,36 +25,33 @@ export default {
   name: 'task-action',
   components: {Whitespace},
   props: {
-    task: Object,
+    projectTask: Object,
   }, 
   data () {
     return {
       inputIsFocused: false,
-      keywords: '',
-
+      keywords: this.projectTask.keywords,
     }
   },
   methods: {
     back() {
-      this.$router.go(-1)
+      this.$router.push('/taskfeed')
     },
     sendData() {
       const keyWords = this.keywords
-
-      const taskId = this.task.id
+      const taskId = this.projectTask.task.id
 
       this.keywords = ''
-
       
       this.$apollo.mutate({
         mutation: UPDATE_PROJECT_TASK_PROBLEM,
         variables: {
           taskId: taskId,
-          status: false,
           keywords: keyWords
         }
       }).then((data) => {
         // Result
+        this.$router.push('/taskfeed')
       }).catch((error) => {
         // Error
         console.error(error)

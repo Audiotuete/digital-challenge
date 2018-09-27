@@ -1,0 +1,9 @@
+fragment ProjectTaskProblemType on ProjectTaskProblemType  {
+  task {
+    id
+    order
+    taskText
+  }
+  keywords
+}	
+

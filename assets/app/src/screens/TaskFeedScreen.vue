@@ -2,7 +2,7 @@
 <template>
   <div>
     <Whitespace/>
-    <Heading :level="1" v-show='!inputIsFocused'>
+    <Heading :level="1">
       Aufgabenliste
     </Heading>
     <div class='task-feed-tablehead'>
@@ -10,11 +10,16 @@
       <span class='task-feed-tablehead-label'>Status</span>
     </div>
     <div class='task-feed-list'>
-    <div @click='goToTaskDetail(projectTask.task)' class='task-feed-item' v-for='projectTask in allProjectTasks' :key=projectTask.projectName>
+    <div @click='goToTaskDetail(projectTask)' class='task-feed-item' v-for='projectTask in allProjectTasks' :key=projectTask.task.order>
       <span class='task-feed-item-text'>{{ projectTask.task.taskText }}</span>
       <span class='task-feed-item-status'>{{ projectTask.status }}</span>
     </div>
-    <a style='text-align:center;margin-top: 1rem;' href='https://plattform.bewirken.org'>Videos für eure Projekte</a>
+
+    <a style='align-self: center;margin-top: 1rem;' href='https://plattform.bewirken.org'>
+    <button href='https://plattform.bewirken.org' type='submit' class='task-feed-button-send'>
+      Videos für euer Projekt
+    </button>
+    </a>
     </div>
   </div>
 </template>
@@ -40,7 +45,7 @@ export default {
   apollo: {
     allProjectTasks: {
       query: ALL_PROJECT_TASKS,
-      // fetchPolicy: 'network-only',
+      fetchPolicy: 'cache-and-network',
     }
   },
   methods: {
@@ -48,20 +53,20 @@ export default {
       this.$router.push({ name: 'task', params: { projectTask }})
     }
   },
-  // beforeRouteEnter (to, from, next) {
-  //   next(vm => {
-  //     vm.$apollo.query({
-  //     query: CURRENT_USER,
-  //     fetchPolicy: 'network-only'
-  //   }).then((data) => {
-  //     if(!data.data.currentUser.currentProject) {
-  //       vm.$router.push('/registerproject')
-  //     }
-  //   }).catch((error) => {
-  //     vm.$router.push('/')
-  //   })
-  //   })   
-  // }
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.$apollo.query({
+      query: CURRENT_USER,
+      fetchPolicy: 'network-only'
+    }).then((data) => {
+      if(!data.data.currentUser.currentProject) {
+        vm.$router.push('/registerproject')
+      }
+    }).catch((error) => {
+      vm.$router.push('/')
+    })
+    })   
+  }
 }
 
 </script>
