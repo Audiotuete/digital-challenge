@@ -1,6 +1,7 @@
 
 <script>
 export default {
+  name: 'heading',
   render: function(createElement) {
     return createElement(
       'h' + this.level,   // tag name
@@ -27,19 +28,19 @@ export default {
     font-size: 1.1rem;
     font-weight: 300;
   }
-  h2 {
+  // h2 {
 
-  }
-  h3 {
+  // }
+  // h3 {
     
-  }
-  h4 {
+  // }
+  // h4 {
     
-  }
-  h5 {
+  // }
+  // h5 {
     
-  }
-  h6 {
+  // }
+  // h6 {
   
-  }
+  // }
 </style>

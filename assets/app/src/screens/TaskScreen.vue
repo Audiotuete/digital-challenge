@@ -63,20 +63,20 @@ export default {
       }
     }
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      // fetchPolicy: 'network-only'
-    }).then((data) => {
-      if(data.data.currentUser.currentProject) {
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => {
+  //     vm.$apollo.query({
+  //     query: CURRENT_USER,
+  //     // fetchPolicy: 'network-only'
+  //   }).then((data) => {
+  //     if(data.data.currentUser.currentProject) {
         
-      }
-    }).catch((error) => {
-      vm.$router.push('/')
-    })
-    })   
-  },
+  //     }
+  //   }).catch((error) => {
+  //     vm.$router.push('/')
+  //   })
+  //   })   
+  // }
 }
 </script>
 

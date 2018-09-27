@@ -5,7 +5,7 @@
     <Heading :level="1" v-show='!inputIsFocused'>
       Deine Kontaktdaten für die Challenge
     </Heading>
-    <div v-show='!inputIsFocused' class='register-user-text__privacy'>Deine Daten werden nicht an Dritte weitergegeben und nach der Challenge automatisch gelöscht!</div>
+    <Paragraph v-show='!inputIsFocused'>Deine Daten werden nicht an Dritte weitergegeben und nach der Challenge automatisch gelöscht!</Paragraph>
     <form class='register-user-form'  @submit.prevent='register()'>
       <label class='register-user-label' for='username'>Nutzername</label>
       <input name='username' v-model='username' @focus='inputIsFocused = true' type='text' class='register-user-input' maxlength='15' placeholder='Peter Pan'/>
@@ -28,6 +28,7 @@
 
 <script>
 import Heading from '../components/atoms/Heading'
+import Paragraph from '../components/atoms/Paragraph'
 import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
@@ -36,11 +37,11 @@ import GET_TOKEN from '../graphql/auth/getToken.gql'
 import CURRENT_USER from '../graphql/users/currentUser.gql'
 
 
-
 export default {
   name: 'register-user-screen',
   components: {
     Heading,
+    Paragraph,    
     Whitespace
   },
   data () {
@@ -124,49 +125,27 @@ export default {
     //   }
     // }
   },
-  beforeRouteEnter(to, from, next) {
-    if(!localStorage.getItem('63[CU^j>3=_UJuG')) {
-      next('/') 
-    } else {
-      next()
-    }
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      // fetchPolicy: 'network-only'
-    }).then((data) => {
-      if(data.data.currentUser.currentProject) {
-        vm.$router.push('/taskfeed')
-      } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
-        vm.$router.push('/')
-      }
-    }).catch((error) => {
-      console.log(error)
-    })
-    })   
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => {
+  //     vm.$apollo.query({
+  //     query: CURRENT_USER,
+  //     // fetchPolicy: 'network-only'
+  //   }).then((data) => {
+  //     if(data.data.currentUser.currentProject) {
+  //       vm.$router.push('/taskfeed')
+  //     } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
+  //       vm.$router.push('/')
+  //     }
+  //   }).catch((error) => {
+  //     console.log(error)
+  //   })
+  //   })   
+  // },
 
 }
 </script>
 
 <style scoped lang='scss'>
-
-  .register-user-text {
-    margin: 0rem 1.25rem 0 1.25rem;
-    font-size: 0.8rem;
-    text-align: center;
-    color: #555555;
-    line-height: 1.3;
-    font-weight: 500;
-
-    &__privacy {
-      width: 80vw;
-      text-align: center;
-      font-size: 0.8rem;
-    }
-  }
 
   .register-user-show-button {
     position: absolute;

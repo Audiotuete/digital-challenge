@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     back() {
-      this.$router.go(-1)
+      this.$router.push('/taskscreen')
     },
     sendData() {
       const action1 = this.action_1
@@ -75,18 +75,18 @@ export default {
       })
     }
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      // fetchPolicy: 'network-only'
-    }).then((data) => {
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => {
+  //     vm.$apollo.query({
+  //     query: CURRENT_USER,
+  //     // fetchPolicy: 'network-only'
+  //   }).then((data) => {
 
-    }).catch((error) => {
-      console.log(error)
-    })
-    })   
-  }
+  //   }).catch((error) => {
+  //     console.log(error)
+  //   })
+  //   })   
+  // }
 }
 </script>
 
@@ -114,46 +114,6 @@ export default {
     margin: 1.5rem 1rem 1rem 1rem;
     font-size: 1.1rem;
     font-weight: 300;
-  }
-
-  .text {
-    margin: 0rem 1.25rem 0 1.25rem;
-    font-size: 0.8rem;
-    text-align: center;
-    color: #555555;
-    line-height: 1.3;
-    font-weight: 500;
-
-    &__privacy {
-      width: 80vw;
-      text-align: center;
-      font-size: 0.8rem;
-    }
-  }
-
-  .show-button {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 7vh;
-    right: 3vw;
-    height: 10vw;
-    width: 10vw;
-    background: #fff;
-    color: $colorPrimary;
-    border-radius: 50%;
-    border: 1px solid $colorPrimary;
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
-  }
-
-  .form {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 70vw;
   }
 
   .label {

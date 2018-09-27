@@ -4,10 +4,10 @@
     <Whitespace/>
     <Heading :level="1">Anmelden</Heading>
     <form id='login-form' class='login-form'  @submit.prevent='login()'>
-      <label class='login-label' for='username'>Nutzername</label>
+      <FormLabel>Nutzername</FormLabel>
       <input name='username' v-model='username' @focus='inputIsFocused = true' type='text' class='login-input' placeholder='Peter Pan'/>
       
-      <label class='login-label' for='password'>Passwort</label>
+      <FormLabel>Passwort</FormLabel>      
       <input name='password' v-model='password' @focus='inputIsFocused = true' type='password' class='login-input'/>
      
       <button type='submit' form='login-form' class='login-button-send'>Anmelden</button>
@@ -18,6 +18,7 @@
 
 <script>
 import Heading from '../components/atoms/Heading'
+import FormLabel from '../components/atoms/FormLabel'
 import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
@@ -28,6 +29,7 @@ export default {
   name: 'login-screen',
   components: {
     Heading,
+    FormLabel,
     Whitespace
   },
   data () {
@@ -68,20 +70,20 @@ export default {
       })
     }
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      // fetchPolicy: 'network-only'
-    }).then((data) => {
-      if(data.data.currentUser.currentProject) {
-        vm.$router.push('/taskfeed')
-      }
-    }).catch((error) => {
-      console.log(error)
-    })
-    })   
-  }
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => {
+  //     vm.$apollo.query({
+  //     query: CURRENT_USER,
+  //     // fetchPolicy: 'network-only'
+  //   }).then((data) => {
+  //     if(data.data.currentUser.currentProject) {
+  //       vm.$router.push('/taskfeed')
+  //     }
+  //   }).catch((error) => {
+  //     console.log(error)
+  //   })
+  //   })   
+  // }
 }
 </script>
 

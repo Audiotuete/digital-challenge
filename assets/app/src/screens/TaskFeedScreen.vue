@@ -48,20 +48,20 @@ export default {
       this.$router.push({ name: 'task', params: { projectTask }})
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      fetchPolicy: 'network-only'
-    }).then((data) => {
-      if(!data.data.currentUser.currentProject) {
-        vm.$router.push('/registerproject')
-      }
-    }).catch((error) => {
-      vm.$router.push('/')
-    })
-    })   
-  },
+  // beforeRouteEnter (to, from, next) {
+  //   next(vm => {
+  //     vm.$apollo.query({
+  //     query: CURRENT_USER,
+  //     fetchPolicy: 'network-only'
+  //   }).then((data) => {
+  //     if(!data.data.currentUser.currentProject) {
+  //       vm.$router.push('/registerproject')
+  //     }
+  //   }).catch((error) => {
+  //     vm.$router.push('/')
+  //   })
+  //   })   
+  // }
 }
 
 </script>

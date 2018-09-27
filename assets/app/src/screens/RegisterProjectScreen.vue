@@ -20,7 +20,7 @@
         </Heading>
 
         <input @keyup='maxInput' v-model='projectCode' autocomplete='off' class='modal-input' maxlength='7' placeholder='XXXXXXX'/>
-        <div  class='register-project-text'>Den Projektcode erfährst du vom Projektersteller oder Projektmitgliedern</div>
+        <Paragraph>Den Projektcode erfährst du vom Projektersteller oder Projektmitgliedern</Paragraph>
         <button @click='joinProject()' class='register-project-button-send'>Projekt beitreten</button>
       </div>
     </div>
@@ -45,8 +45,8 @@
           <Heading :level="1">
             Projekt erfolgreich erstellt
           </Heading>
-          <div  class='register-project-text'><strong>{{ projectName }}</strong></div>
-          <div  class='register-project-text'>{{ projectDescription }}</div>
+          <Paragraph><strong>{{ projectName }}</strong></Paragraph>
+          <Paragraph>{{ projectDescription }}</Paragraph>
           <label class='register-project-label register-project-label__code'>Project-Code</label>
           <div  class='register-project-code-display'>{{ projectCode }}</div>
           <button @click='goToProjectFeed()' class='register-project-button-send'>Weiter</button>
@@ -58,6 +58,7 @@
 
 <script>
 import Heading from '../components/atoms/Heading'
+import Paragraph from '../components/atoms/Paragraph'
 import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
@@ -69,6 +70,7 @@ export default {
   name: 'register-project-screen',
   components:{
     Heading,
+    Paragraph,
     Whitespace
   },
   data () {
@@ -144,20 +146,20 @@ export default {
       }
     }
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      // fetchPolicy: 'network-only'
-    }).then((data) => {
-      if(data.data.currentUser.currentProject) {
-        vm.$router.push('/taskfeed')
-      }
-    }).catch((error) => {
-      vm.$router.push('/')
-    })
-    })   
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => {
+  //     vm.$apollo.query({
+  //     query: CURRENT_USER,
+  //     // fetchPolicy: 'network-only'
+  //   }).then((data) => {
+  //     if(data.data.currentUser.currentProject) {
+  //       vm.$router.push('/taskfeed')
+  //     }
+  //   }).catch((error) => {
+  //     vm.$router.push('/')
+  //   })
+  //   })   
+  // },
 }
 </script>
 
@@ -169,21 +171,6 @@ export default {
   height: 100vh;
   background: rgba(0, 0, 0, 0.75);
 }
-
-  .register-project-text {
-    margin: 0rem 1.25rem 0 1.25rem;
-    font-size: 0.8rem;
-    text-align: center;
-    color: #555555;
-    line-height: 1.3;
-    font-weight: 500;
-
-    &__privacy {
-      width: 80vw;
-      text-align: center;
-      font-size: 0.8rem;
-    }
-  }
 
   .register-project-show-button {
     position: absolute;

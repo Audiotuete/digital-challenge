@@ -3,22 +3,24 @@
   <div>
     <Whitespace/>
     <Heading :level="1">Willkommen zur Project-Challenge-App</Heading>
-    <div class='challenge-code-text'>Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</div>
+    <Paragraph>Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</Paragraph>
     <input @keyup='maxInput' v-model='inputValue' autocomplete='off' @focus='inputIsFocused = true' class='challenge-code-input' maxlength='5' placeholder='XXXXX'/>
     
-    <div class='challenge-code-text' v-if='aChallenge'>{{ aChallenge.context }}</div>
-    <div class='challenge-code-text' v-if='!aChallenge'>-</div>
+    <Paragraph v-if='aChallenge'>{{ aChallenge.context }}</Paragraph>
+    <Paragraph v-else>-</Paragraph>
 
     <!-- <div class='challenge-code-show-question' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up challenge-code-show-question-icon'></i></div> -->
     <button @click='submitCode()' class='challenge-code-button-send'>Beitreten</button>
     <div class='challenge-code-whiteroom'></div>
-    <div  class='challenge-code-text'>Wenn du schon einen Challenge-Account hast kannst du dich einfach direkt anmelden.</div>
+    <Paragraph>Wenn du schon einen Challenge-Account hast kannst du dich einfach direkt anmelden.</Paragraph>
+
     <button @click='goToLoginScreen()' class='challenge-code-button-send'>Anmelden</button>
   </div>
 </template>
 
 <script>
 import Heading from '../components/atoms/Heading'
+import Paragraph from '../components/atoms/Paragraph'
 import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
@@ -29,6 +31,7 @@ export default {
   name: 'join-challenge-screen',
   components: {
     Heading,
+    Paragraph,
     Whitespace
   },
   data () {
@@ -72,22 +75,22 @@ export default {
       }
     }
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      // fetchPolicy: 'network-only'
-    }).then((data) => {
-      if(data.data.currentUser.currentProject) {
-        vm.$router.push('/taskfeed')
-      } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
-        vm.$router.push('/login')
-      }
-    }).catch((error) => {
-      console.log(error)
-    })
-    })   
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => {
+  //     vm.$apollo.query({
+  //     query: CURRENT_USER,
+  //     // fetchPolicy: 'network-only'
+  //   }).then((data) => {
+  //     if(data.data.currentUser.currentProject) {
+  //       vm.$router.push('/taskfeed')
+  //     } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
+  //       vm.$router.push('/login')
+  //     }
+  //   }).catch((error) => {
+  //     console.log(error)
+  //   })
+  //   })   
+  // },
 
 }
 </script>
