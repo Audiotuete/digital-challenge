@@ -5,8 +5,10 @@ import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { ApolloLink } from 'apollo-link'
 import { setContext } from 'apollo-link-context'
-import { InMemoryCache } from 'apollo-cache-inmemory'
+import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory'
 // import { withClientState } from 'apollo-link-state';
+
+import introspectionQueryResultData from './graphql/fragmentTypes.json'
 
 import VueApollo from 'vue-apollo'
 
@@ -14,9 +16,12 @@ import App from './App.vue'
 
 import { routes } from './routes'
 
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData
+});
 
 // Setup the apollo state management
-const app_cache = new InMemoryCache()
+const app_cache = new InMemoryCache({ fragmentMatcher })
 
 // const stateLink = withClientState({
 //   app_cache,

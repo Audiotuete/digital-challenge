@@ -1,4 +1,5 @@
 require('./check-versions')()
+require('../src/graphql/extractFragmentTypes')
 
 process.env.NODE_ENV = 'production'
 

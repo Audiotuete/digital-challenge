@@ -1,9 +1,14 @@
 require('./check-versions')()
+require('../src/graphql/extractFragmentTypes')
 
 var config = require('../config')
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 }
+
+
+var fs = require('fs')
+var fetch = require('node-fetch')
 
 var opn = require('opn')
 var path = require('path')
