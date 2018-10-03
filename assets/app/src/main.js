@@ -14,8 +14,10 @@ import VueApollo from 'vue-apollo'
 
 import App from './App.vue'
 
-import { routes } from './routes'
+import { router } from './routes'
 
+
+// Create fragment matcher for fragmented Queries (... on "Type")
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData
 });
@@ -60,19 +62,13 @@ const apolloClient = new ApolloClient({
   connectToDevTools: true,
 })
 
-const apolloProvider = new VueApollo({
+export const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
 })
 
 // Install the vue plugin
 Vue.use(VueApollo)
-Vue.use(VueRouter)
 Vue.use(VueYoutube)
-
-const router = new VueRouter({
-  // mode: 'history',
-  routes
-})
 
 new Vue({
   el: '#app',

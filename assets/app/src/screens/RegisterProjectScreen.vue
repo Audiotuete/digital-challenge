@@ -65,7 +65,6 @@ import Whitespace from '../components/layout/Whitespace'
 // GraphQL
 import CREATE_PROJECT from '../graphql/projects/createProject.gql'  
 import JOIN_PROJECT from '../graphql/projects/joinProject.gql'
-import CURRENT_USER from '../graphql/users/currentUser.gql'
 
 export default {
   name: 'register-project-screen',
@@ -99,7 +98,7 @@ export default {
         }
       }).then(() => {
         // Result
-        this.$router.push('/taskfeed')
+        this.$router.push('/')
 
       }).catch((error) => {
         // Error
@@ -139,7 +138,7 @@ export default {
       })
     },
     goToProjectFeed() {
-      this.$router.push('/taskfeed')
+      this.$router.push('/')
     },
     maxInput() {
       var max = 7; // The maxlength you want
@@ -147,21 +146,7 @@ export default {
         this.projectCode = this.projectCode.substring(0, max);
       }
     }
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      // fetchPolicy: 'network-only'
-    }).then((data) => {
-      if(data.data.currentUser.currentProject) {
-        vm.$router.push('/taskfeed')
-      }
-    }).catch((error) => {
-      vm.$router.push('/')
-    })
-    })   
-  },
+  }
 }
 </script>
 

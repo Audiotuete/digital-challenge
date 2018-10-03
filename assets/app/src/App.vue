@@ -6,7 +6,7 @@
   >
     <!-- <router-view name='navbar'></router-view> -->
     <router-view class='main-container'></router-view>
-    <router-view name='footer'></router-view>
+    <!-- <router-view name='footer'></router-view> -->
     <!-- <div v-for='user in allUsers' :key=user.id>
       {{user.username}}
     </div> -->

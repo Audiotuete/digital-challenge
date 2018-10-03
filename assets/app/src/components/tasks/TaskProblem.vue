@@ -1,29 +1,32 @@
 <template>
-<div class='container'>
-  <Whitespace/>
-  <div class='header'>
-      <button class='header-icon' @click='back()'><i class='sl-icon icon-arrow-left'></i></button>
-      {{projectTask.task.taskTextt}} 
-  </div>
+  <div>
+    <Whitespace/>
+    <div class='header'>
+        <button class='header-icon' @click='back()'><i class='sl-icon icon-arrow-left'></i></button>
+        {{projectTask.task.taskText}} 
+    </div>
     <form id='form' class='form'  @submit.prevent='sendData()'>
 
-      <label class='label' for='action-3'>Stichpunkte</label>
+      <FormLabel>Stichpunkte</FormLabel>
       <textarea name='action-3' v-model='keywords' @focus='inputIsFocused = true' type='text' class='textfield' placeholder='Schreibe hier einfach 10 Stichwörter die dein Problem beschreiben'/>
-     
+      
       <button type='submit' form='form' class='button-send'>Abschicken</button>
     </form>
-    </div>
+  </div>
 </template>
 
 <script>
 import Whitespace from '../layout/Whitespace'
+import FormLabel from '../atoms/FormLabel'
 
 import UPDATE_PROJECT_TASK_PROBLEM from '../../graphql/projectTasks/updateProjectTaskProblem.gql'
-import CURRENT_USER from '../../graphql/users/currentUser.gql'
 
 export default {
   name: 'task-action',
-  components: {Whitespace},
+  components: {
+    Whitespace,
+    FormLabel
+  },
   props: {
     projectTask: Object,
   }, 
@@ -35,7 +38,7 @@ export default {
   },
   methods: {
     back() {
-      this.$router.push('/taskfeed')
+      this.$router.push('/')
     },
     sendData() {
       const keyWords = this.keywords
@@ -51,27 +54,14 @@ export default {
         }
       }).then((data) => {
         // Result
-        this.$router.push('/taskfeed')
+        this.$router.push('/')
       }).catch((error) => {
         // Error
         console.error(error)
         // We restore the initial user input
         this.keywords = keyWords
-
       })
     }
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      // fetchPolicy: 'network-only'
-    }).then((data) => {
-     
-    }).catch((error) => {
-      console.log(error)
-    })
-    })   
   }
 }
 </script>
@@ -142,12 +132,6 @@ export default {
     width: 70vw;
   }
 
-  .label {
-    align-self: flex-start;
-    font-size: 0.6rem;
-    margin-top: 0.4rem
-  }
-
   .textfield {
     pointer-events: auto;
     display: flex;
@@ -155,7 +139,7 @@ export default {
     align-items: flex-start;
     width: 100%;
     height: 6.5rem;
-    margin-top: 0.1rem;
+    margin-bottom: 0.2rem;
     font-size: 0.9rem;
     font-weight: 300;
     padding: 0.75rem;

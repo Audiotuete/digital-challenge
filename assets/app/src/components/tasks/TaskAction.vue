@@ -1,34 +1,39 @@
 <template>
-<div class='container'>
-  <Whitespace/>
-  <div class='header'>
-    <button class='header-icon' @click='back()'><i class='sl-icon icon-arrow-left'></i></button>
-    {{projectTask.task.taskText}}
-  </div>
+  <div>
+    <Whitespace/>
+    <div class='header'>
+      <button class='header-icon' @click='back()'><i class='sl-icon icon-arrow-left'></i></button>
+      {{projectTask.task.taskText}}
+    </div>
     <form id='form' class='form'  @submit.prevent='sendData()'>
-      <label class='label' for='username'>1. Aktion</label>
+
+      <FormLabel>1. Aktion</FormLabel>
       <input name='action-1' v-model='action_1' @focus='inputIsFocused = true' type='text' class='input'>
       
-      <label class='label' for='action-2'>2. Aktion</label>
+      <FormLabel>2. Aktion</FormLabel>
       <input name='action-2' v-model='action_2' @focus='inputIsFocused = true' type='text' class='input'/>
 
-      <label class='label' for='action-3'>3. Aktion</label>
+      <FormLabel>3. Aktion</FormLabel>
       <input name='action-3' v-model='action_3' @focus='inputIsFocused = true' type='text' class='input'/>
-     
+      
       <button type='submit' form='form' class='button-send'>Abschicken</button>
     </form>
-    </div>
+  </div>
 </template>
 
 <script>
 import Whitespace from '../layout/Whitespace'
+import FormLabel from '../atoms/FormLabel'
+
 
 import UPDATE_PROJECT_TASK_ACTION from '../../graphql/projectTasks/updateProjectTaskAction.gql'
-import CURRENT_USER from '../../graphql/users/currentUser.gql'
 
 export default {
   name: 'task-action',
-  components: {Whitespace},
+  components: {
+    Whitespace,
+    FormLabel
+  },
   props: {
     projectTask: Object,
   }, 
@@ -42,7 +47,7 @@ export default {
   },
   methods: {
     back() {
-      this.$router.push('/taskfeed')
+      this.$router.push('/')
     },
     sendData() {
       const action1 = this.action_1
@@ -65,7 +70,7 @@ export default {
         }
       }).then((data) => {
         // Result
-        this.$router.push('/taskfeed')
+        this.$router.push('/')
       }).catch((error) => {
         // Error
         console.error(error)
@@ -75,35 +80,11 @@ export default {
         this.action_3 = action3
       })
     }
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      // fetchPolicy: 'network-only'
-    }).then((data) => {
-
-    }).catch((error) => {
-      console.log(error)
-    })
-    })   
   }
 }
 </script>
 
 <style scoped lang='scss'>
-.container {
-    z-index: 50;
-    font-size: 1rem;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    flex: 1;
-    box-sizing: border-box;
-    padding: 0 3vw  5vh 3vw;
-  }
 
   .whiteroom {
     height: 16vh;
@@ -117,12 +98,6 @@ export default {
     font-weight: 300;
   }
 
-  .label {
-    align-self: flex-start;
-    font-size: 0.6rem;
-    margin-top: 0.4rem
-  }
-
   .input {
     pointer-events: auto;
     display: flex;
@@ -130,7 +105,7 @@ export default {
     align-items: flex-start;
     width: 100%;
     height: 2.5rem;
-    margin-top: 0.1rem;
+    margin-bottom: 0.2rem;
     font-size: 0.9rem;
     font-weight: 300;
     padding-left: 0.75rem;

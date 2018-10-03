@@ -35,8 +35,6 @@ import Whitespace from '../components/layout/Whitespace'
 // GraphQL
 import CREATE_USER from '../graphql/users/createUser.gql'
 import GET_TOKEN from '../graphql/auth/getToken.gql'
-import CURRENT_USER from '../graphql/users/currentUser.gql'
-
 
 export default {
   name: 'register-user-screen',
@@ -92,6 +90,7 @@ export default {
         this.email = theEmail
 
         if (!challengeCode) {
+          //  Alert for no challenge Code association
           this.$router.push('/')
         }
       })
@@ -126,24 +125,7 @@ export default {
     //     this.inputValue = this.inputValue.substring(0, max);
     //   }
     // }
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      // fetchPolicy: 'network-only'
-    }).then((data) => {
-      if(data.data.currentUser.currentProject) {
-        vm.$router.push('/taskfeed')
-      } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
-        vm.$router.push('/')
-      }
-    }).catch((error) => {
-      console.log(error)
-    })
-    })   
-  },
-
+  }
 }
 </script>
 

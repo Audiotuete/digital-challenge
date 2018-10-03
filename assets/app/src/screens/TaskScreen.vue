@@ -1,9 +1,8 @@
-
 <template>
   <div> 
-    <TaskProblem v-if='tasktype == "ProjectTaskProblemType"' :projectTask='task'/>
-    <TaskIdea v-else-if='tasktype == "ProjectTaskIdeaType"' :projectTask='task'/>
-    <TaskAction v-else-if='tasktype == "ProjectTaskActionType"' :projectTask='task'/>
+    <TaskProblem v-if='tasktype == "ProjectTaskProblemType"' :projectTask='task' class="container"/>
+    <TaskIdea v-else-if='tasktype == "ProjectTaskIdeaType"' :projectTask='task' class="container"/>
+    <TaskAction v-else-if='tasktype == "ProjectTaskActionType"' :projectTask='task' class="container"/>
   </div>
 </template>
 
@@ -14,8 +13,6 @@ import TaskProblem from '../components/tasks/TaskProblem'
 import TaskIdea from '../components/tasks/TaskIdea'
 import TaskAction from '../components/tasks/TaskAction'
 
-import CURRENT_USER from '../graphql/users/currentUser.gql'
-
 export default {
   name: 'task-screen',
   components: {Whitespace, TaskProblem, TaskIdea, TaskAction},
@@ -23,42 +20,31 @@ export default {
     return {
       task: this.$route.params.projectTask,
       tasktype: this.$route.params.projectTask.__typename,
-      showEnterCodeModal: false,
-      showCreateSuccesModal: false,
-      // ------
-      inputIsFocused: false,
-      projectName: '',
-      projectDescription: '',
     }
   },
-  methods: {
-    goToProjectFeed() {
-      this.$router.push('/taskfeed')
-    },
-    maxInput() {
-      var max = 7; // The maxlength you want
-      if(this.projectCode.length > max) {
-        this.projectCode = this.projectCode.substring(0, max);
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      if(!vm.task) {
+        vm.$router.push('/')
       }
-    }
-  },
-  // beforeRouteEnter(to, from, next) {
-  //   next(vm => {
-  //     vm.$apollo.query({
-  //     query: CURRENT_USER,
-  //     // fetchPolicy: 'network-only'
-  //   }).then((data) => {
-  //     if(data.data.currentUser.currentProject) {
-        
-  //     }
-  //   }).catch((error) => {
-  //     vm.$router.push('/')
-  //   })
-  //   })   
-  // }
+    })
+  }
 }
 </script>
 
 <style scoped lang='scss'>
+
+.container {
+    z-index: 50;
+    font-size: 1rem;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1;
+    box-sizing: border-box;
+    padding: 0 3vw  5vh 3vw;
+  }
 
 </style>

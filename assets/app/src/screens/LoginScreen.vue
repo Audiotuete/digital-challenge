@@ -23,7 +23,6 @@ import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
 import GET_TOKEN from '../graphql/auth/getToken.gql'
-import CURRENT_USER from '../graphql/users/currentUser.gql'
 
 export default {
   name: 'login-screen',
@@ -59,7 +58,7 @@ export default {
         localStorage.setItem('/<Sj4z9X(Bf,{W', token)
         
         if (localStorage.getItem('/<Sj4z9X(Bf,{W')) {
-          this.$router.push('/taskfeed')
+          this.$router.push('/')
         }
       }).catch((error) => {
         // Error
@@ -69,20 +68,6 @@ export default {
         this.password = thePassword
       })
     }
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      // fetchPolicy: 'network-only'
-    }).then((data) => {
-      if(data.data.currentUser.currentProject) {
-        vm.$router.push('/taskfeed')
-      }
-    }).catch((error) => {
-      console.log(error)
-    })
-    })   
   }
 }
 </script>

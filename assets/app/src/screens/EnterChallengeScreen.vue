@@ -25,7 +25,6 @@ import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
 import A_CHALLENGE from '../graphql/challenges/aChallenge.gql'
-import CURRENT_USER from '../graphql/users/currentUser.gql'
 
 export default {
   name: 'join-challenge-screen',
@@ -74,24 +73,7 @@ export default {
         this.inputValue = this.inputValue.substring(0, max);
       }
     }
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      // fetchPolicy: 'network-only'
-    }).then((data) => {
-      if(data.data.currentUser.currentProject) {
-        vm.$router.push('/taskfeed')
-      } else if (!localStorage.getItem('63[CU^j>3=_UJuG')) {
-        vm.$router.push('/login')
-      }
-    }).catch((error) => {
-      console.log(error)
-    })
-    })   
-  },
-
+  }
 }
 </script>
 

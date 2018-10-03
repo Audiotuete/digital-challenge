@@ -12,7 +12,9 @@
     <div class='task-feed-list'>
     <div @click='goToTaskDetail(projectTask)' class='task-feed-item' v-for='projectTask in allProjectTasks' :key=projectTask.task.order>
       <span class='task-feed-item-text'>{{ projectTask.task.taskText }}</span>
-      <span class='task-feed-item-status'>{{ projectTask.status }}</span>
+      <span class='task-feed-item-status'>
+        <i v-if="projectTask.status" style="font-size: 1.5rem; color: #95C23D" class='sl-icon icon-check'></i>
+        </span>
     </div>
 
     <a style='align-self: center;margin-top: 1rem;' href='https://plattform.bewirken.org'>
@@ -29,7 +31,6 @@ import Heading from '../components/atoms/Heading'
 import Whitespace from '../components/layout/Whitespace'
 
 import ALL_PROJECT_TASKS from '../graphql/projectTasks/allProjectTasks.gql'
-import CURRENT_USER from '../graphql/users/currentUser.gql'
 
 export default {
   name: 'task-feed-screen',
@@ -50,22 +51,8 @@ export default {
   },
   methods: {
     goToTaskDetail (projectTask) {
-      this.$router.push({ name: 'task', params: { projectTask }})
+      this.$router.push({ name: 'task', params: { id: projectTask.task.id, projectTask }})
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      vm.$apollo.query({
-      query: CURRENT_USER,
-      fetchPolicy: 'network-only'
-    }).then((data) => {
-      if(!data.data.currentUser.currentProject) {
-        vm.$router.push('/registerproject')
-      }
-    }).catch((error) => {
-      vm.$router.push('/')
-    })
-    })   
   }
 }
 

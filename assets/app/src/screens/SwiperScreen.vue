@@ -2,52 +2,51 @@
 <template>
   <div>
     <vue-swing
-      @throwoutleft='vote(answerValues.NO)'
-      @throwoutup='true'
-      @throwoutright='vote(answerValues.YES)'
-      :config='config'
-      ref='vueswing'
-      class='swing-wrapper'
+      @throwoutleft="vote(answerValues.NO)"
+      @throwoutup="true"
+      @throwoutright="vote(answerValues.YES)"
+      :config="config"
+      ref="vueswing"
+      class="swing-wrapper"
     >
-    <div class='card card-not-dragable'></div>
+    <div class="card card-not-dragable"></div>
       <div
-        v-for='card in cards'
-        :key='card'
-        :class='{ /* Make card not dragble while making notes */ card: true, "card-not-dragable": showNotepad }'
-        ref='card'
+        v-for="card in cards"
+        :key="card"
+        :class="{ /* Make card not dragble while making notes */ card: true, 'card-not-dragable': showNotepad }"
+        ref="card"
         >
         <!-- Front of Card where the Question is presented and voteable -->
-        <div v-show='!showNotepad' class='question-container'>
-          <youtube id='youtube-player'
+        <div v-show="!showNotepad" class="question-container">
+          <youtube id="youtube-player"
             video-id
-            :player-vars='playerVars' 
-            ref='youtube' 
-            @playing='playing'
-            @paused='isPlaying = !isPlaying'
+            :player-vars="playerVars" 
+            ref="youtube" 
+            @playing="playing"
+            @paused="isPlaying = !isPlaying"
             >
           </youtube>
-          <button v-show='!isPlaying' class='button-play' @click='playVideoIndex(2)'><i class='fa fa-play'></i></button>
-          <button class='button-replay' style='marigin: 20px' @click='replayVideo()'><i class='fa fa-undo'></i></button>
+          <button v-show="!isPlaying" class="button-play" @click="playVideoIndex(2)"><i class="fa fa-play"></i></button>
+          <button class="button-replay" style="marigin: 20px" @click="replayVideo()"><i class="fa fa-undo"></i></button>
         </div>
         <!-- Back of Card where a note can be made an send (not dragable) -->
-        <div v-show='showNotepad' class='note-container'>
+        <div v-show="showNotepad" class="note-container">
             
-            <div v-show='!inputIsFocused' class='note-header'><button class='note-header-icon' @click='showNotepad = false'><i class='sl-icon icon-arrow-left'></i></button>Anmerkungen zu:</div>
-            <div v-show='!inputIsFocused' class='note-question'>Sollten in der Kantine vegetarische Speisen angeboten werden?</div>
-            <textarea @focus='inputIsFocused = true' class='note-input' maxlength='250'/>
-            <div class='note-show-question' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up note-show-question-icon'></i></div>
-            <button @click='makeNote(answerValues.NOTE)' class='note-button-send'>Senden</button>
+            <div v-show="!inputIsFocused" class="note-header"><button class="note-header-icon" @click="showNotepad = false"><i class="sl-icon icon-arrow-left"></i></button>Anmerkungen zu:</div>
+            <div v-show="!inputIsFocused" class="note-question">Sollten in der Kantine vegetarische Speisen angeboten werden?</div>
+            <textarea @focus="inputIsFocused = true" class="note-input" maxlength="250"/>
+            <div class="note-show-question" v-show="inputIsFocused" @click="inputIsFocused = false"><i  class="sl-icon icon-arrow-up note-show-question-icon"></i></div>
+            <button @click="makeNote(answerValues.NOTE)" class="note-button-send">Senden</button>
         </div>
       </div>
-
     </vue-swing>
     
-    <div v-show='!showNotepad' class='choicebar'>
-      <div  class='choice-container'>
-        <button @click='vote(answerValues.NO)' class='choice-button' href='#'><i class='sl-icon icon-close'></i></button>
-        <button v-show='!showNotepad' @click='goToNotepad()' class='choice-button' href='#'><i class='sl-icon icon-note'></i></button>
-        <!-- <button v-show='showNotepad' @click='goToNotepad()' class='choice-button' href='#'><i class='sl-icon icon-question'></i></button> -->
-        <button @click='vote(answerValues.YES)' class='choice-button' href='#'><i class='sl-icon icon-check'></i></button>
+    <div v-show="!showNotepad" class="choicebar">
+      <div  class="choice-container">
+        <button @click="vote(answerValues.NO)" class="choice-button" href='#'><i class="sl-icon icon-close"></i></button>
+        <button v-show="!showNotepad" @click="goToNotepad()" class="choice-button" href='#'><i class="sl-icon icon-note"></i></button>
+        <!-- <button v-show="showNotepad" @click="goToNotepad()" class="choice-button" href='#'><i class="sl-icon icon-question"></i></button> -->
+        <button @click="vote(answerValues.YES)" class="choice-button" href='#'><i class="sl-icon icon-check"></i></button>
       </div>
     </div>
   </div>
@@ -137,7 +136,7 @@ export default {
     async playVideoIndex (index) {
       let player = this.$refs.youtube[0].player
       if (await player.getPlayerState() == 2) {
-        console.log('playing paused video')
+        console.log("playing paused video")
           player.playVideo()
       } else {
         player.playVideoAt(index)
@@ -158,13 +157,12 @@ export default {
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 
 .swing-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
   padding-bottom: 150%;
 }
 
@@ -237,9 +235,9 @@ export default {
     height: 10vw;
     width: 10vw;
     background: #fff;
-    color: $colorPrimary;
+    color: #629EE4;
     border-radius: 50%;
-    border: 1px solid $colorPrimary;
+    border: 1px solid #629EE4;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
   }
 
@@ -261,11 +259,11 @@ export default {
   }
 
   .note-button-send {
-    background: $colorPrimary;
+    background: #4A90E2;
     border: none;
     outline: none;
     width: 60vw;
-    height: 45px;
+    height: 8vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -300,7 +298,7 @@ export default {
   background-color: rgba(255, 255, 255, .9);
 
   .fa-play {
-    color: $colorPrimary;
+    color: #629EE4;
     padding: 0.75vw 0 0 0.75vw;
   }
 }
