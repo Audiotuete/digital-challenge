@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import screenfull from 'screenfull'
 
 export default {
+  name: 'the-header',
   data () {
     return {
 
@@ -25,29 +25,30 @@ export default {
 
 <style lang='scss'>
 .navbar {
+  position: fixed;
   z-index: 1000;
   display: flex;
   justify-content: center;
-  position: absolute;
-  height: 10vh;
+  height: 8vh;
   width: 100%;
   background: rgba(255,255,255,1);
-  box-shadow: 0 0 4px 0 rgba(0,0,0,0.25);
+  box-shadow: 0 0 4px 1px rgba(0,0,0,0.15);
 }
 .menu-container {
   width: 65vw;
   display: flex;
-  padding-top: 1px;
+  padding-top: 5px;
   justify-content: space-around;
   align-items: center;
+  line-height: 0;
 }
 
 .fa {
   color: rgb(181, 181, 181);
-  font-size: 7vw;
+  font-size: 4vw;
 
   &.fa-stack-exchange {
-    font-size: 8vw;
+    font-size: 4vw;
     color: #7ED321
   }
 

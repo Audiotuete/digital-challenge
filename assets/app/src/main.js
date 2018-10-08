@@ -1,6 +1,4 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import VueYoutube from 'vue-youtube'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { ApolloLink } from 'apollo-link'
@@ -57,7 +55,7 @@ const apolloClient = new ApolloClient({
   cache: app_cache, 
   link: ApolloLink.from([
     authLink,
-    new HttpLink({uri: 'https://bwirken.org/graphql'})]
+    new HttpLink({uri: `http://localhost:8000/graphql`})]
   ),
   connectToDevTools: true,
 })
@@ -68,7 +66,6 @@ export const apolloProvider = new VueApollo({
 
 // Install the vue plugin
 Vue.use(VueApollo)
-Vue.use(VueYoutube)
 
 new Vue({
   el: '#app',

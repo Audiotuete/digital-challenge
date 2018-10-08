@@ -4,8 +4,8 @@
     id='app'
     @click='enterFullscreen()'
   >
-    <!-- <router-view name='navbar'></router-view> -->
-    <router-view class='main-container'></router-view>
+    <router-view name='header'></router-view>
+    <router-view></router-view>
     <!-- <router-view name='footer'></router-view> -->
     <!-- <div v-for='user in allUsers' :key=user.id>
       {{user.username}}
@@ -58,10 +58,14 @@ export default {
   padding: 0 3vw  5vh 3vw;
 }
 
+html, body {
+  position: relative;
+  overflow: hidden;
+}
+
 body {
   background-color: #ffffff;
   margin: 0;
-  overflow: hidden;
   height: 100vh;
   width: 100vw;
   font-family: 'Open Sans';

@@ -2,90 +2,108 @@
 <template>
   <div>
     <vue-swing
-      @throwoutleft="vote(answerValues.NO)"
-      @throwoutup="true"
-      @throwoutright="vote(answerValues.YES)"
-      :config="config"
-      ref="vueswing"
-      class="swing-wrapper"
+      @throwoutup='skipQuestion()'
+      @throwoutleft='vote(answerValues.NO)'
+      @throwoutdown='toggleCard()'
+      @throwoutright='vote(answerValues.YES)'
+      @change='this.activeCard = document.querySelector(".cardselector")'
+      :config='config'
+      ref='vueswing'
+      class='swing-wrapper'
     >
-    <div class="card card-not-dragable"></div>
+      <div class='card card-not-dragable'>
+        <div v-show='!showNotepad' class='question-container'>
+          <div class='question-image-text'>
+          </div>
+        </div>
+      </div>
       <div
-        v-for="card in cards"
-        :key="card"
-        :class="{ /* Make card not dragble while making notes */ card: true, 'card-not-dragable': showNotepad }"
-        ref="card"
+        v-for='card in cardStack'
+        :class='[ "card-" + card.id, { card: true, "card-notepad": showNotepad }]'
+        :key='card.id'
         >
         <!-- Front of Card where the Question is presented and voteable -->
-        <div v-show="!showNotepad" class="question-container">
-          <youtube id="youtube-player"
-            video-id
-            :player-vars="playerVars" 
-            ref="youtube" 
-            @playing="playing"
-            @paused="isPlaying = !isPlaying"
-            >
-          </youtube>
-          <button v-show="!isPlaying" class="button-play" @click="playVideoIndex(2)"><i class="fa fa-play"></i></button>
-          <button class="button-replay" style="marigin: 20px" @click="replayVideo()"><i class="fa fa-undo"></i></button>
+        <div v-show='!showNotepad' class='question-container'>
+          <div class='question-image-text'>
+            <img src='https://source.unsplash.com/random/450x650' alt=''>
+          </div>
+          <div class='choicebar'>
+            <div  class='choice-container'>
+              {{card.id}} 
+              <button @click='vote(answerValues.NO)' class='choice-button' href='#'><i class='sl-icon icon-close'></i></button>
+              <button v-show='!showNotepad' @click='toggleCard()' class='choice-button' href='#'><i class='sl-icon icon-note'></i></button>
+              <!-- <button v-show='showNotepad' @click='toggleCard()' class='choice-button' href='#'><i class='sl-icon icon-question'></i></button> -->
+              <button @click='vote(answerValues.YES)' class='choice-button' href='#'><i class='sl-icon icon-check'></i></button>
+            </div>
+          </div>
         </div>
         <!-- Back of Card where a note can be made an send (not dragable) -->
-        <div v-show="showNotepad" class="note-container">
+        <div v-show='showNotepad' class='note-container'>
             
-            <div v-show="!inputIsFocused" class="note-header"><button class="note-header-icon" @click="showNotepad = false"><i class="sl-icon icon-arrow-left"></i></button>Anmerkungen zu:</div>
-            <div v-show="!inputIsFocused" class="note-question">Sollten in der Kantine vegetarische Speisen angeboten werden?</div>
-            <textarea @focus="inputIsFocused = true" class="note-input" maxlength="250"/>
-            <div class="note-show-question" v-show="inputIsFocused" @click="inputIsFocused = false"><i  class="sl-icon icon-arrow-up note-show-question-icon"></i></div>
-            <button @click="makeNote(answerValues.NOTE)" class="note-button-send">Senden</button>
+            <div v-show='!inputIsFocused' class='note-header'><button class='note-header-icon' @click='toggleCard()'><i class='sl-icon icon-arrow-left'></i></button>Anmerkungen zu:</div>
+            <div v-show='!inputIsFocused' class='note-question'>Sollten in der Kantine vegetarische Speisen angeboten werden?</div>
+            <textarea @focus='inputIsFocused = true' class='note-input' maxlength='250'/>
+            <div class='note-show-question' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up note-show-question-icon'></i></div>
+            <button @click='makeNote(answerValues.NOTE)' class='note-button-send'>Senden</button>
         </div>
       </div>
+
     </vue-swing>
-    
-    <div v-show="!showNotepad" class="choicebar">
-      <div  class="choice-container">
-        <button @click="vote(answerValues.NO)" class="choice-button" href='#'><i class="sl-icon icon-close"></i></button>
-        <button v-show="!showNotepad" @click="goToNotepad()" class="choice-button" href='#'><i class="sl-icon icon-note"></i></button>
-        <!-- <button v-show="showNotepad" @click="goToNotepad()" class="choice-button" href='#'><i class="sl-icon icon-question"></i></button> -->
-        <button @click="vote(answerValues.YES)" class="choice-button" href='#'><i class="sl-icon icon-check"></i></button>
-      </div>
-    </div>
+    <button @click='login()' class='note-button-send'>Register</button>
   </div>
 </template>
 
 <script>
 import VueSwing from 'vue-swing'
 
+// GraphQL
+import ALL_USER_ANSWERS from '../graphql/userAnswers/allUserAnswers.gql'
+import CREATE_USER from '../graphql/users/createUser.gql'
+import GET_TOKEN from '../graphql/auth/getToken.gql'
+
 export default {
   name: 'swiper-screen',
   components: { VueSwing },
   data () {
     return {
-      cards: ['A'],
+      allUserAnswers: {},
+      activeCard: "",
+      cardStack: [ 
+        {id: 0, value: 'A'}
+      ],
       none: 'none',
       answerValues: {'NO': 0, 'YES': 1, 'NOTE': 2},
       isPlaying: false,
       showNotepad: false,
       inputIsFocused: false,
-      playerVars: {
-        listType: 'playlist',
-        list: 'PLglaqunAuU1jKrln443Vi2xkwX_Oimg_G',
-        autoplay: 0,
-        rel: 0,
-        showinfo: 0,
-        showsearch: 0,
-        controls: 0,
-        modestbranding: 0,
-        cc_load_policy: 1
-      }
+      activeCard: "",
+      username: "test",
+      password: "password"
+    }
+  },
+  apollo: {
+    allUserAnswers: {
+      query: ALL_USER_ANSWERS,
+      fetchPolicy: 'cache-and-network',
+      // update(data) {
+      //   console.log(data)
+      // },
     }
   },
   computed: {
+    // username() {
+    //   return 'Alfred'
+    // },
+    // password() {
+    //   return 'password'
+    // },
     config () {
       return {        
         allowedDirections: 
         [
+          // Skip Question on swipe UP
           // VueSwing.Direction.UP,
-          // VueSwing.Direction.DOWN,
+          VueSwing.Direction.DOWN,
           VueSwing.Direction.RIGHT,
           VueSwing.Direction.LEFT,
         ]
@@ -102,62 +120,97 @@ export default {
     }
   },
   methods: {
+    register() {
+      const theUsername = this.username
+      const thePassword = this.password
+
+      this.username = ''
+      this.password = ''
+      
+      this.$apollo.mutate({
+        mutation: CREATE_USER,
+        variables: {
+          pollId: 8,
+          username: theUsername,
+          password: thePassword,
+        }
+      }).then((data) => {
+        
+        this.username = theUsername
+        this.password = thePassword
+
+        this.login()
+
+      }).catch((error) => {
+        // Error
+        console.error('No user created')
+      })
+    },
+    login() {
+      const theUsername = this.username
+      const thePassword = this.password
+      
+      this.$apollo.mutate({
+        mutation: GET_TOKEN,
+        variables: {
+          username: theUsername,
+          password: thePassword
+        }
+      }).then((data) => {
+        // Result
+        const token = data.data.tokenAuth.token
+        localStorage.setItem('/<Sj4z9X(Bf,{W', token)
+        if (localStorage.getItem('/<Sj4z9X(Bf,{W')) {
+          // this.$router.push('/')
+        }
+      }).catch((error) => {
+        // Error
+        console.error(error)
+        // We restore the initial user input
+      })
+    },
     vote(value = -1) {
-      
       this.saveCardAnswer(value, null)
-      this.isPlaying = false
     },
-
-    goToNotepad() {
-      this.$refs.youtube[0].player.pauseVideo()
-      this.showNotepad = true
-      
+    toggleCard() { 
+      let card = this.$refs.vueswing.stack.getCard(this.activeCard)
+      card.throwIn(0, 0)
+      this.showNotepad = !this.showNotepad
     },
-
     makeNote(value = -1, note = null) {
+
       this.saveCardAnswer(value, note)
     },
-
+    skipQuestion() {},
     requestNewCard() {
       // Query here
       this.showNotepad = false
       this.inputIsFocused = false;
-      this.cards.push(Math.random())	
+      this.cardStack.unshift({id: Math.floor(Math.random() * Math.floor(100)), value: Math.floor(Math.random() * Math.floor(20000))})
     },
 
     saveCardAnswer(value, note) {
       // Mutation here
-      console.log(value, note)
-      this.cards.shift()
-      this.requestNewCard()
+      if(this.cardStack.length == 1) {
+        this.cardStack.pop()
 
-    },
-
-    async playVideoIndex (index) {
-      let player = this.$refs.youtube[0].player
-      if (await player.getPlayerState() == 2) {
-        console.log("playing paused video")
-          player.playVideo()
-      } else {
-        player.playVideoAt(index)
       }
-      // setInterval(() => this.isPlaying = true, 200)
-    },
+      this.requestNewCard()
+      // console.log(this.cardStack)
+      // console.log(this.activeCard)
 
-    replayVideo() {
-      let player = this.$refs.youtube[0].player
-      player.stopVideo()
-      player.playVideo()
-    },
-
-    playing () {
-      this.isPlaying = true;
-    } 
-  }
+    }
+  },
+  mounted() {
+    this.activeCard = document.querySelector('.card-' + this.cardStack[0].id)
+  },
+  updated() {
+    this.activeCard = document.querySelector('.card-' + this.cardStack[0].id)
+  },
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 
 .swing-wrapper {
   display: flex;
@@ -167,21 +220,25 @@ export default {
 }
 
 .card {
-  top: 6vh;
+  z-index: 50;
+  top: 11.5vh;
   position: absolute;
-  height: calc(79.5% * 1.35);
-  width: calc(68.5% * 1.35);
+  height: calc(74% * 1);
+  width: calc(88% * 1);
   display: flex;
   justify-content: center;
   align-items: center;  
   background-color: #fff;
   border-radius: 1.5vh;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.15);
   overflow: hidden;
 
   .question-container {
     z-index: 50;
+    width: 100%;
+    height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;  
   }
@@ -242,7 +299,7 @@ export default {
   }
 
   .note-input {
-    pointer-events: auto;
+    pointer-events: all;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -276,69 +333,28 @@ export default {
   }
 }
 
-.card-not-dragable {
-  pointer-events: auto;
+.card-notepad {
+  // transform: none !important;
 }
 
-// .overlay {
-//   z-index: 900;
-// }
-
-.button-play {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-  border-radius: 10px;
-  height: 15.5vw;
-  width: 21vw;
-  border: none;
-  outline: none;
-  // color: #fff;
-  background-color: rgba(255, 255, 255, .9);
-
-  .fa-play {
-    color: #629EE4;
-    padding: 0.75vw 0 0 0.75vw;
-  }
-}
-
-.button-replay {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 6vh;
-  left: 6vw;
-  z-index: 100;
-  border-radius: 1vw;
-  height: 8vw;
-  width: 8vw;
-  border: none;
-  outline: none;
-  // color: #fff;
-  background-color: rgba(0, 0, 0, .5);
-
-  .fa-undo {
-    padding-top: 10%;
-    font-size: 5vw;
-  }
+.question-image-text {
+  height: 10%;
+  flex: 4;
 }
 
 .choicebar {
-  z-index: 100;
   display: flex;
-  justify-content: center;
-  position: absolute;
-  top: 79vh;
-  height: 14vh;
   width: 100%;
+  flex: 1;
+  align-self: flex-end;
+  justify-content: center;
+  height: 16vh;
   background: rgba(255,255,255,1);
-  box-shadow: 0 0 6px 0 rgba(0,0,0,0.25);
+  // box-shadow: 0 0 6px 0 rgba(0,0,0,0.25);
 }
 
 .choice-container {
-  width: 85vw;
+  width: 100%;
   display: flex;
   padding-top: 1px;
   justify-content: space-around;
