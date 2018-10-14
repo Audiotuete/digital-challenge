@@ -1,21 +1,21 @@
 
 <template>
-  <div>
-    <Whitespace/>
-    <Heading :level="1">Willkommen zur Project-Challenge-App</Heading>
-    <Paragraph>Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</Paragraph>
-    <input @keyup='maxInput' v-model='inputValue' autocomplete='off' @focus='inputIsFocused = true' class='challenge-code-input' maxlength='5' placeholder='XXXXX'/>
-    
-    <Paragraph v-if='aChallenge'>{{ aChallenge.context }}</Paragraph>
-    <Paragraph v-else>-</Paragraph>
+<div>
+  <Whitespace/>
+  <Heading :level="1">Willkommen zur Project-Challenge-App</Heading>
+  <Paragraph>Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</Paragraph>
+  <input @input='maxInput()' v-model='inputValue' autocomplete='off' @focus='inputIsFocused = true' class='challenge-code-input' maxlength='5' placeholder='XXXXX'/>
+  
+  <Paragraph v-if='aChallenge'>{{ aChallenge.context }}</Paragraph>
+  <Paragraph v-else>-</Paragraph>
 
-    <!-- <div class='challenge-code-show-question' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up challenge-code-show-question-icon'></i></div> -->
-    <button @click='submitCode()' class='challenge-code-button-send'>Beitreten</button>
-    <div class='challenge-code-whiteroom'></div>
-    <Paragraph>Wenn du schon einen Challenge-Account hast kannst du dich einfach direkt anmelden.</Paragraph>
+  <!-- <div class='challenge-code-show-question' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up challenge-code-show-question-icon'></i></div> -->
+  <button @click='submitCode()' class='challenge-code-button-send'>Beitreten</button>
+  <div class='challenge-code-whiteroom'></div>
+  <Paragraph>Wenn du schon einen Challenge-Account hast kannst du dich einfach direkt anmelden.</Paragraph>
 
-    <button @click='goToLoginScreen()' class='challenge-code-button-send'>Anmelden</button>
-  </div>
+  <button @click='goToLoginScreen()' class='challenge-code-button-send'>Anmelden</button>
+</div>
 </template>
 
 <script>
@@ -72,7 +72,7 @@ export default {
       if(this.inputValue.length > max) {
         this.inputValue = this.inputValue.substring(0, max);
       }
-    }
+    },
   }
 }
 </script>

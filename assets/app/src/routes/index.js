@@ -24,7 +24,7 @@ export const router = new VueRouter({
   // mode: 'history',
   routes: [
     { path: '/', 
-      components: { default: SwiperScreen}, 
+      components: { default: TaskFeedScreen}, 
       meta: { requiresAuth: true, requiresProject: true }},
 
     { path: '/task/:id', 
