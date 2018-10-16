@@ -1,13 +1,10 @@
 query currentUser {
     currentUser {
       username
-      email
       dateJoined
-      currentChallenge {
+      currentPoll {
         id
-      }
-      currentProject {
-        id
+        pollName
       }
     } 
   }

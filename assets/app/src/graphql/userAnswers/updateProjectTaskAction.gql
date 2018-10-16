@@ -1,0 +1,28 @@
+mutation updateProjectTaskAction($taskId: ID!, $answerText: String) { 
+    updateProjectTaskAction(
+      taskId: $taskId,
+      answer_text: $answerText
+    ) {
+      firstTouched
+      lastTouched
+      countTouched
+      status
+      # task {
+      #   id
+      #   taskText
+      # }
+      # submittedBy {
+      #   username
+      # }
+    } 
+  }
+
+#   mutation {
+#   updateUserAnswerOpen(questionId: 75, answerText: "Year") {
+#     firstTouched
+#     lastTouched
+#     countTouched
+#     status
+#     answerText
+#   }
+# }
