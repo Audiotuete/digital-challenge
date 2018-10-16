@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import screenfull from 'screenfull'
-
+import { dictionary } from './validation.conf.js'
+// import screenfull from 'screenfull'
 // import ALL_USERS from './graphql/users/allUsers.gql'
 
 export default {
@@ -38,8 +38,10 @@ export default {
       //   screenfull.request()
       // }
     }
+  },
+  created() {
+    this.$validator.localize('de', dictionary.de) 
   }
-
 }
 
 </script>
@@ -56,6 +58,16 @@ export default {
   flex: 1;
   box-sizing: border-box;
   padding: 0 3vw  5vh 3vw;
+}
+
+.form-error-text {
+  font-size: 0.7rem;
+  color: #E94F35;
+  text-align: center;
+}
+
+.form-error-field {
+  border: 1px solid #E94F35;
 }
 
 body {

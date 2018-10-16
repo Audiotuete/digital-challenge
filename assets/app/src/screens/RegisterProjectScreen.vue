@@ -3,10 +3,10 @@
   <div>
     <Whitespace/>
     <Heading :level="1" v-show='!inputIsFocused'>
-      Einem Projekt per Code beitreten
+      Einem Projekt beitreten
     </Heading>
 
-    <button v-show='!inputIsFocused' @click='showEnterCodeModal = true' class='register-project-button-send'>Code eingeben</button>
+    <button v-show='!inputIsFocused' @click='showEnterCodeModal = true' class='register-project-button-send'>Projektpasswort eingeben</button>
 
     <div @click='showEnterCodeModal = false' :class='{ /* Make card not dragble while making notes */ "darken-background": showEnterCodeModal }'></div> 
     <div v-show='showEnterCodeModal' class='card '>
@@ -16,11 +16,11 @@
           <button class='modal-header-icon' @click='showEnterCodeModal = false'>
             <i class='sl-icon icon-close'></i>
           </button>
-          Projekt-Code eingeben
+          Projektpasswort eingeben
         </Heading>
 
         <input @keyup='maxInput' v-model='projectCode' autocomplete='off' class='modal-input' maxlength='7' placeholder='XXXXXXX'/>
-        <Paragraph>Den Projektcode erfährst du vom Projektersteller oder Projektmitgliedern</Paragraph>
+        <Paragraph>Das Projektpasswort erfährst du vom Projektersteller oder Projektmitgliedern</Paragraph>
         <button @click='joinProject()' class='register-project-button-send'>Projekt beitreten</button>
       </div>
     </div>

@@ -2,7 +2,7 @@
 <template>
 <div>
   <Whitespace/>
-  <Heading :level="1">Willkommen zur Project-Challenge-App</Heading>
+  <Heading :level="1">Willkommen zur Projekt-Challenge-App</Heading>
   <Paragraph>Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</Paragraph>
   <input @input='maxInput()' v-model='inputValue' autocomplete='off' @focus='inputIsFocused = true' class='challenge-code-input' maxlength='5' placeholder='XXXXX'/>
   
@@ -58,7 +58,6 @@ export default {
   methods: {
     submitCode() {
       if(this.aChallenge) {
-        console.log(this.aChallenge)
         localStorage.setItem('63[CU^j>3=_UJuG', this.inputValue)
         this.$router.push('/registeruser')
       }

@@ -6,22 +6,66 @@
       Deine Kontaktdaten für die Challenge
     </Heading>
     <Paragraph v-show='!inputIsFocused'>Deine Daten werden nicht an Dritte weitergegeben und nach der Challenge automatisch gelöscht!</Paragraph>
-    <form class='register-user-form'  @submit.prevent='register()'>
+    <form class='register-user-form'  @submit.prevent='validateBeforeRegsiter()'>
+
       <FormLabel>Nutzername</FormLabel>
-      <input name='username' v-model='username' @focus='inputIsFocused = true' type='text' class='register-user-input' maxlength='15' placeholder='Peter Pan'/>
-      
+      <input
+      :class="{'register-user-input': true, 'form-error-field': errors.has('Nutzername') || errors.has('Nutzername vergeben') }"
+      v-model='username'
+      v-validate='{ required: true, alpha_dash: true, min: 3 }'
+      data-vv-delay="800"
+      @focus='inputIsFocused = true'
+      @keyup='errors.remove("Nutzername vergeben")'
+      type='text' 
+      name='Nutzername' 
+      maxlength='15' 
+      placeholder='Peter'/>
+      <span class="form-error-text" v-show="errors.has('Nutzername')">{{ errors.first('Nutzername') }}</span>
+      <span class="form-error-text" v-show="errors.has('Nutzername vergeben')">{{ errors.first('Nutzername vergeben') }}</span>
+
+
       <FormLabel>Mail-Adresse</FormLabel>
-      <input name='email' v-model='email' @focus='inputIsFocused = true' type='email' class='register-user-input' placeholder='peter.pan@gmail.de'/>
-      
+      <input
+        :class="{'register-user-input': true, 'form-error-field': errors.has('Mail-Adresse') }"
+        v-model='email' 
+        v-validate='{ required: true, email: true }'
+        data-vv-delay="1200"
+        @focus='inputIsFocused = true' 
+        type='email'
+        name='Mail-Adresse' 
+        placeholder='peter.pan@gmail.de'
+      />
+      <span class="form-error-text" v-show="errors.has('Mail-Adresse')">{{ errors.first('Mail-Adresse') }}</span>
+
       <FormLabel style='margin-top: 1rem'>Passwort</FormLabel>
-      <input name='password' v-model='password' @focus='inputIsFocused = true' type='password' class='register-user-input' minlength='8'/>
-      
+      <input 
+        :class="{'register-user-input': true, 'form-error-field': errors.has('Passwort') }"
+        v-model='password' 
+        v-validate='{ required: true, min: 8 }'
+        data-vv-delay="1200"
+        @focus='inputIsFocused = true' 
+        type='password' 
+        name='Passwort' 
+        ref="Passwort"
+      />
+      <span class="form-error-text" v-show="errors.has('Passwort')">{{ errors.first('Passwort') }}</span>
+
       <FormLabel>Passwort wiederholen</FormLabel>
-      <input name='password-repeat' v-model='passwordRepeat' @focus='inputIsFocused = true' type='password' class='register-user-input' minlength='8'/>
+      <input 
+        :class="{'register-user-input': true, 'form-error-field': errors.has('Passwort wiederholen') }"
+        v-validate="'required|confirmed:Passwort'"
+        data-vv-as='Passwort wiederholen'
+        data-vv-delay="1200"
+        v-model='passwordRepeat'
+        @focus='inputIsFocused = true' 
+        type='password'
+        name='Passwort wiederholen' 
+      />
+      <span class="form-error-text" v-show="errors.has('Passwort wiederholen')">{{ errors.first('Passwort wiederholen') }}</span>
 
       <button type='submit' class='register-user-button-send'>Account erstellen</button>
     </form>
-          <div class='register-user-show-button' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up register-user-show-question-icon'></i></div>
+    <div class='register-user-show-button' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up register-user-show-question-icon'></i></div>
 
   </div>
 </template>
@@ -47,13 +91,22 @@ export default {
   data () {
     return {
       inputIsFocused: false,
-      username: '',
-      email: '',
-      password: '',
-      passwordRepeat: ''
+      // username: '',
+      // email: '',
+      // password: '',
+      // passwordRepeat: ''
     }
   },
   methods: {
+    validateBeforeRegsiter() {
+      this.$validator.validateAll().then((result) => {
+        if(!result) {
+          return false
+        } else {
+          this.register()
+        }
+      })
+    },
     register() {
       const theUsername = this.username
       const theEmail = this.email
@@ -83,11 +136,18 @@ export default {
         this.login()
 
       }).catch((error) => {
-        // Error
-        console.error(error)
+        if(error.message == 'GraphQL error: Username already exists!') {
+          this.errors.remove('Nutzername vergeben')
+          this.errors.add({
+            field: 'Nutzername vergeben',
+            msg: 'Nutzername leider schon vergeben'
+          })
+        }
         // We restore the initial user input
         this.username = theUsername
         this.email = theEmail
+        this.password = thePassword
+        this.passwordRepeat = thePasswordRepeat
 
         if (!challengeCode) {
           //  Alert for no challenge Code association
@@ -114,7 +174,7 @@ export default {
         }
       }).catch((error) => {
         // Error
-        console.error(error)
+        // console.error(error)
         // We restore the initial user input
       })
     },
