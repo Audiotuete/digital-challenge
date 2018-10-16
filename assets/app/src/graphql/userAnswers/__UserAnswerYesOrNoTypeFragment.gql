@@ -1,0 +1,10 @@
+fragment UserAnswerYesOrNoType on UserAnswerYesOrNoType {
+  question {
+    id  
+    order
+    questionText
+  }
+  answerValue
+  answerNote
+}
+

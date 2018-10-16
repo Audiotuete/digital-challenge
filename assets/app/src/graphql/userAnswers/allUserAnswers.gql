@@ -1,0 +1,16 @@
+#import './__UserAnswerMultipleTypeFragment.gql'
+#import './__UserAnswerOpenTypeFragment.gql'
+#import './__UserAnswerYesOrNoTypeFragment.gql'
+
+query allUserAnswers {
+    allUserAnswers {
+      ... UserAnswerMultipleType 
+      ... UserAnswerOpenType
+      ... UserAnswerYesOrNoType
+      status
+      poll {
+        id
+        pollName
+      }
+    }
+  }
