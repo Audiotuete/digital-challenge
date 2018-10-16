@@ -1,0 +1,10 @@
+fragment ProjectTaskIdeaType on ProjectTaskIdeaType {
+  task {
+    id
+    order
+    taskText
+  }
+  hashtag1
+  hashtag2
+  hashtag3
+}

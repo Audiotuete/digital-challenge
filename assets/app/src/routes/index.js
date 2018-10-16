@@ -3,6 +3,13 @@ import VueRouter from 'vue-router'
 
 import { apolloProvider } from '../main'
 
+import RegisterUserScreen from '../screens/RegisterUserScreen'
+import EnterChallengeScreen from '../screens/EnterChallengeScreen'
+import LoginScreen from '../screens/LoginScreen'
+import RegisterProjectScreen from '../screens/RegisterProjectScreen'
+import TaskFeedScreen from '../screens/TaskFeedScreen'
+import TaskScreen from '../screens/TaskScreen'
+
 import TheNavbar from '../components/navbar/TheNavbar'
 import TheFooter from '../components/footer/TheFooter'
 

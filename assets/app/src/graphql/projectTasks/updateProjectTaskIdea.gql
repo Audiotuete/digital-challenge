@@ -19,12 +19,3 @@ mutation updateProjectTaskIdea($taskId: ID!, $status: Boolean!, $hashtag1: Strin
       }
     } 
   }
-
-# mutation {updateUserAnswerYesOrNo(questionId:76 ,answerNote: "Mastermind", answerValue: 2) {
-#   firstTouched
-#   lastTouched
-#   countTouched
-#   status
-#   answerValue
-#   answerNote
-# }}
