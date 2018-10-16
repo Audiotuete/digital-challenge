@@ -1,0 +1,19 @@
+#import './__ProjectTaskAktionTypeFragment.gql'
+#import './__ProjectTaskProblemTypeFragment.gql'
+#import './__ProjectTaskIdeaTypeFragment.gql'
+
+
+query allProjectTasks {
+    allProjectTasks {
+      ... ProjectTaskProblemType 
+      ... ProjectTaskIdeaType
+      ... ProjectTaskActionType
+      # project {
+      #   projectName
+      # }
+      status
+      submittedBy {
+        username
+      }
+    }
+  }

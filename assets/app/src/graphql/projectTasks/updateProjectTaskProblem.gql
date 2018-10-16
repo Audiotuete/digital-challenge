@@ -16,13 +16,3 @@ mutation updateProjectTaskProblem($taskId: ID!, $keywords: String) {
       }
     } 
   }
-
-#   mutation {
-#   updateUserAnswerMultiple(questionId: 72, answerChoiceKey: -1) {
-#     firstTouched
-#     lastTouched
-#     countTouched
-#     status
-#     answerChoiceKey
-#   }
-# }

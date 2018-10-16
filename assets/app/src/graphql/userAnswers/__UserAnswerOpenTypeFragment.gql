@@ -1,8 +1,0 @@
-fragment UserAnswerOpenType on UserAnswerOpenType {
-  question {
-    id
-    order
-    questionText
-  }
-  answerText
-}

@@ -1,9 +1,0 @@
-fragment UserAnswerMultipleType on UserAnswerMultipleType {
-  question {
-    id
-    order
-    questionText
-    options
-  }
-  answerChoiceKey
-}
