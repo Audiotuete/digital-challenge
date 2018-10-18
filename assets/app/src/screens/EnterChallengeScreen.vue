@@ -6,7 +6,7 @@
   <Paragraph>Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</Paragraph>
   <input @input='maxInput()' v-model='inputValue' autocomplete='off' @focus='inputIsFocused = true' class='challenge-code-input' maxlength='5' placeholder='XXXXX'/>
   
-  <Paragraph v-if='aChallenge'>{{ aChallenge.context }}</Paragraph>
+  <Paragraph v-if='checkChallenge'>{{ checkChallenge.context }}</Paragraph>
   <Paragraph v-else>-</Paragraph>
 
   <!-- <div class='challenge-code-show-question' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up challenge-code-show-question-icon'></i></div> -->
@@ -24,7 +24,7 @@ import Paragraph from '../components/atoms/Paragraph'
 import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
-import A_CHALLENGE from '../graphql/challenges/aChallenge.gql'
+import CHECK_CHALLENGE from '../graphql/challenges/checkChallenge.gql'
 
 export default {
   name: 'join-challenge-screen',
@@ -38,12 +38,12 @@ export default {
       inputCount: 0,
       inputIsFocused: false,
       inputValue: '',
-      aChallenge: undefined,
+      checkChallenge: undefined,
     }
   },
   apollo: {
-    aChallenge: {
-      query: A_CHALLENGE,
+    checkChallenge: {
+      query: CHECK_CHALLENGE,
       variables() {
         return {
           challengeCode: this.inputValue
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     submitCode() {
-      if(this.aChallenge) {
+      if(this.checkChallenge) {
         localStorage.setItem('63[CU^j>3=_UJuG', this.inputValue)
         this.$router.push('/registeruser')
       }

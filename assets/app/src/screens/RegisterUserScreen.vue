@@ -91,10 +91,10 @@ export default {
   data () {
     return {
       inputIsFocused: false,
-      // username: '',
-      // email: '',
-      // password: '',
-      // passwordRepeat: ''
+      username: '',
+      email: '',
+      password: '',
+      passwordRepeat: ''
     }
   },
   methods: {
@@ -113,10 +113,10 @@ export default {
       const thePassword = this.password
       const thePasswordRepeat = this.passwordRepeat
 
-      this.username = ''
-      this.email = ''
-      this.password = ''
-      this.passwordRepeat = ''
+      // this.username = ''
+      // this.email = ''
+      // this.password = ''
+      // this.passwordRepeat = ''
 
       const challengeCode = localStorage.getItem('63[CU^j>3=_UJuG')
       

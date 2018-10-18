@@ -3,6 +3,21 @@ query aChallenge($challengeCode: String!) {
       context
       city
       year
+      contactInfo{
+        username
+        email
+        phone
+      }
       challengeCode
-    } 
-  }
+      challengedateSet {
+        id
+        eventName
+        eventLocation
+        eventDate
+        eventEndTime
+        eventStartTime
+        eventNotes
+      }
+    }
+  } 
+  

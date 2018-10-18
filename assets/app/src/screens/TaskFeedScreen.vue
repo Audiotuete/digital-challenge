@@ -76,8 +76,6 @@ export default {
     font-size: .75rem;
     font-weight: 600;
     padding-bottom: 0.5rem;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -95,7 +93,7 @@ export default {
 
     .task-feed-item {
       display: flex;
-      font-size: .75rem;
+      font-size: .85rem;
       align-items: center;
       justify-content: flex-start;
       text-align: left;

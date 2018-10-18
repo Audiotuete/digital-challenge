@@ -5,6 +5,8 @@ import { apolloProvider } from '../main'
 
 import RegisterUserScreen from '../screens/RegisterUserScreen'
 import EnterChallengeScreen from '../screens/EnterChallengeScreen'
+import ChallengeInfoScreen from '../screens/ChallengeInfoScreen'
+
 import LoginScreen from '../screens/LoginScreen'
 import RegisterProjectScreen from '../screens/RegisterProjectScreen'
 import TaskFeedScreen from '../screens/TaskFeedScreen'
@@ -35,7 +37,7 @@ export const router = new VueRouter({
       components: { default: RegisterProjectScreen}, 
       meta: { requiresAuth: true }},
 
-      { path: '/enterchallenge', components: { default: EnterChallengeScreen} },
+      { path: '/enterchallenge', components: { default: ChallengeInfoScreen} },
       { path: '/login', components: { default: LoginScreen}}, 
       { path: '/registeruser', components: { default: RegisterUserScreen }},
   
