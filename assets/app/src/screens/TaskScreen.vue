@@ -7,15 +7,16 @@
 </template>
 
 <script>
-import Whitespace from '../components/layout/Whitespace'
-
 import TaskProblem from '../components/tasks/TaskProblem'
 import TaskIdea from '../components/tasks/TaskIdea'
 import TaskAction from '../components/tasks/TaskAction'
 
 export default {
   name: 'task-screen',
-  components: {Whitespace, TaskProblem, TaskIdea, TaskAction},
+  components: {
+    TaskProblem, 
+    TaskIdea, 
+    TaskAction},
   data () {
     return {
       task: this.$route.params.projectTask,

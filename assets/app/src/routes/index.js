@@ -33,11 +33,15 @@ export const router = new VueRouter({
       props: true,
       meta: { requiresAuth: true, requiresProject: true }},
 
+    { path: '/challengeinfo', 
+      components: { default: ChallengeInfoScreen}, 
+      meta: { requiresAuth: true, requiresProject: true }},
+
       { path: '/registerproject', 
       components: { default: RegisterProjectScreen}, 
       meta: { requiresAuth: true }},
 
-      { path: '/enterchallenge', components: { default: ChallengeInfoScreen} },
+      { path: '/enterchallenge', components: { default: EnterChallengeScreen} },
       { path: '/login', components: { default: LoginScreen}}, 
       { path: '/registeruser', components: { default: RegisterUserScreen }},
   

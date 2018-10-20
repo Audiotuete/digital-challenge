@@ -1,10 +1,10 @@
 
 <template>
   <div>
-    <Whitespace/>
-    <Heading :level="1">
+    <BaseWhitespace/>
+    <BaseHeading :level="1">
       Aufgabenliste
-    </Heading>
+    </BaseHeading>
     <div class='task-feed-tablehead'>
       <span class='task-feed-tablehead-label'>Aufgabe</span>
       <span class='task-feed-tablehead-label'>Status</span>
@@ -23,24 +23,26 @@
     </button>
     </a>
     </div>
+    <div class='show-challengeinfo-button' @click='goToChallengeInfo()'>
+      <i class='sl-icon icon-fire show-challengeinfo-button-icon'></i>
+    </div>
+
   </div>
 </template>
 
 <script>
-import Heading from '../components/atoms/Heading'
-import Whitespace from '../components/layout/Whitespace'
 
+// GraphQL
 import ALL_PROJECT_TASKS from '../graphql/projectTasks/allProjectTasks.gql'
 
 export default {
   name: 'task-feed-screen',
   components: {
-    Heading,
-    Whitespace
+
   },
   data () {
     return {
-      allProjectTasks: []
+      allProjectTasks: {}
     }
   },
   apollo: {
@@ -50,8 +52,11 @@ export default {
     }
   },
   methods: {
-    goToTaskDetail (projectTask) {
+    goToTaskDetail(projectTask) {
       this.$router.push({ name: 'task', params: { id: projectTask.task.id, projectTask }})
+    },
+    goToChallengeInfo() {
+      this.$router.push('/challengeinfo')
     }
   }
 }
@@ -59,6 +64,26 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+
+  .show-challengeinfo-button {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    height: 16vw;
+    width: 16vw;
+    background: $colorPrimary;
+    border-radius: 50%;
+    // border: 1px solid #ffffff;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.25);
+
+    &-icon {
+      font-size: 1.9rem;
+      color: #ffffff;
+    }
+  }
 
   .task-feed-whiteroom {
     height: 16vh;
@@ -93,7 +118,7 @@ export default {
 
     .task-feed-item {
       display: flex;
-      font-size: .85rem;
+      font-size: .8rem;
       align-items: center;
       justify-content: flex-start;
       text-align: left;

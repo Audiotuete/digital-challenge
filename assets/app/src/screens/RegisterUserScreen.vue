@@ -1,14 +1,14 @@
 
 <template>
   <div>
-    <Whitespace/>
-    <Heading :level="1" v-show='!inputIsFocused'>
+    <BaseWhitespace/>
+    <BaseHeading :level="1" v-show='!inputIsFocused'>
       Deine Kontaktdaten für die Challenge
-    </Heading>
-    <Paragraph v-show='!inputIsFocused'>Deine Daten werden nicht an Dritte weitergegeben und nach der Challenge automatisch gelöscht!</Paragraph>
+    </BaseHeading>
+    <BaseParagraph v-show='!inputIsFocused'>Deine Daten werden nicht an Dritte weitergegeben und nach der Challenge automatisch gelöscht!</BaseParagraph>
     <form class='register-user-form'  @submit.prevent='validateBeforeRegsiter()'>
 
-      <FormLabel>Nutzername</FormLabel>
+      <BaseFormLabel>Nutzername</BaseFormLabel>
       <input
       :class="{'register-user-input': true, 'form-error-field': errors.has('Nutzername') || errors.has('Nutzername vergeben') }"
       v-model='username'
@@ -24,7 +24,7 @@
       <span class="form-error-text" v-show="errors.has('Nutzername vergeben')">{{ errors.first('Nutzername vergeben') }}</span>
 
 
-      <FormLabel>Mail-Adresse</FormLabel>
+      <BaseFormLabel>Mail-Adresse</BaseFormLabel>
       <input
         :class="{'register-user-input': true, 'form-error-field': errors.has('Mail-Adresse') }"
         v-model='email' 
@@ -37,7 +37,7 @@
       />
       <span class="form-error-text" v-show="errors.has('Mail-Adresse')">{{ errors.first('Mail-Adresse') }}</span>
 
-      <FormLabel style='margin-top: 1rem'>Passwort</FormLabel>
+      <BaseFormLabel style='margin-top: 1rem'>Passwort</BaseFormLabel>
       <input 
         :class="{'register-user-input': true, 'form-error-field': errors.has('Passwort') }"
         v-model='password' 
@@ -50,7 +50,7 @@
       />
       <span class="form-error-text" v-show="errors.has('Passwort')">{{ errors.first('Passwort') }}</span>
 
-      <FormLabel>Passwort wiederholen</FormLabel>
+      <BaseFormLabel>Passwort wiederholen</BaseFormLabel>
       <input 
         :class="{'register-user-input': true, 'form-error-field': errors.has('Passwort wiederholen') }"
         v-validate="'required|confirmed:Passwort'"
@@ -71,10 +71,6 @@
 </template>
 
 <script>
-import Heading from '../components/atoms/Heading'
-import Paragraph from '../components/atoms/Paragraph'
-import FormLabel from '../components/atoms/FormLabel'
-import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
 import CREATE_USER from '../graphql/users/createUser.gql'
@@ -83,10 +79,7 @@ import GET_TOKEN from '../graphql/auth/getToken.gql'
 export default {
   name: 'register-user-screen',
   components: {
-    Heading,
-    Paragraph,
-    FormLabel,  
-    Whitespace
+
   },
   data () {
     return {

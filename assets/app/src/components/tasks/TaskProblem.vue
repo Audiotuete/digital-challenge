@@ -1,13 +1,13 @@
 <template>
   <div>
-    <Whitespace/>
+    <BaseWhitespace/>
     <div class='header'>
         <button class='header-icon' @click='back()'><i class='sl-icon icon-arrow-left'></i></button>
         {{projectTask.task.taskText}} 
     </div>
     <form id='form' class='form'  @submit.prevent='sendData()'>
 
-      <FormLabel>Stichpunkte</FormLabel>
+      <BaseFormLabel>Stichpunkte</BaseFormLabel>
       <textarea name='action-3' v-model='keywords' @focus='inputIsFocused = true' type='text' class='textfield' placeholder='Schreibe hier einfach 10 Stichwörter die dein Problem beschreiben'/>
       
       <button type='submit' form='form' class='button-send'>Abschicken</button>
@@ -16,16 +16,14 @@
 </template>
 
 <script>
-import Whitespace from '../layout/Whitespace'
-import FormLabel from '../atoms/FormLabel'
 
+// GraphQL
 import UPDATE_PROJECT_TASK_PROBLEM from '../../graphql/projectTasks/updateProjectTaskProblem.gql'
 
 export default {
   name: 'task-action',
   components: {
-    Whitespace,
-    FormLabel
+
   },
   props: {
     projectTask: Object,

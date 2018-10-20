@@ -1,9 +1,11 @@
-query aChallenge($challengeCode: String!) {
-    aChallenge(challengeCode: $challengeCode) {
+# Change so challenge code is read from requesting user. No challenge code argument needed
+
+query aChallenge {
+    aChallenge {
       context
       city
       year
-      contactInfo{
+      contactInfo {
         username
         email
         phone

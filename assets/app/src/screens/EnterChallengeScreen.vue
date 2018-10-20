@@ -1,37 +1,32 @@
 
 <template>
 <div>
-  <Whitespace/>
-  <Heading :level="1">Willkommen zur Projekt-Challenge-App</Heading>
-  <Paragraph>Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</Paragraph>
+  <BaseWhitespace/>
+  <BaseHeading :level="1">Willkommen zur Projekt-Challenge-App</BaseHeading>
+  <BaseParagraph>Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</BaseParagraph>
   <input @input='maxInput()' v-model='inputValue' autocomplete='off' @focus='inputIsFocused = true' class='challenge-code-input' maxlength='5' placeholder='XXXXX'/>
   
-  <Paragraph v-if='checkChallenge'>{{ checkChallenge.context }}</Paragraph>
-  <Paragraph v-else>-</Paragraph>
+  <BaseParagraph v-if='checkChallenge'>{{ checkChallenge.context }}</BaseParagraph>
+  <BaseParagraph v-else>-</BaseParagraph>
 
   <!-- <div class='challenge-code-show-question' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up challenge-code-show-question-icon'></i></div> -->
-  <button @click='submitCode()' class='challenge-code-button-send'>Beitreten</button>
+  <BaseButton @click.native='summitCode()'>Beitreten</BaseButton>
   <div class='challenge-code-whiteroom'></div>
-  <Paragraph>Wenn du schon einen Challenge-Account hast kannst du dich einfach direkt anmelden.</Paragraph>
-
-  <button @click='goToLoginScreen()' class='challenge-code-button-send'>Anmelden</button>
+  <BaseParagraph>Wenn du schon einen Challenge-Account hast kannst du dich einfach direkt anmelden.</BaseParagraph>
+  
+  <BaseButton @click.native='goToLoginScreen()'>Anmelden</BaseButton>
 </div>
 </template>
 
 <script>
-import Heading from '../components/atoms/Heading'
-import Paragraph from '../components/atoms/Paragraph'
-import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
 import CHECK_CHALLENGE from '../graphql/challenges/checkChallenge.gql'
 
 export default {
-  name: 'join-challenge-screen',
+  name: 'enter-challenge-screen',
   components: {
-    Heading,
-    Paragraph,
-    Whitespace
+
   },
   data () {
     return {

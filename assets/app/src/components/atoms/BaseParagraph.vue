@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'paragraph',
+  name: 'base-paragraph',
   // props: {
   //   size: {
   //     type: Number,
@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  p {
+  .paragraph {
     margin: 0rem 1.25rem 0 1.25rem;
     font-size: 0.8rem;
     text-align: center;

@@ -1,13 +1,13 @@
 
 <template>
   <div>
-    <Whitespace/>
-    <Heading :level="1">Anmelden</Heading>
+    <BaseWhitespace/>
+    <BaseHeading :level="1">Anmelden</BaseHeading>
     <form id='login-form' class='login-form'  @submit.prevent='login()'>
-      <FormLabel>Nutzername</FormLabel>
+      <BaseFormLabel>Nutzername</BaseFormLabel>
       <input name='username' v-model='username' @focus='inputIsFocused = true' type='text' class='login-input' placeholder='Peter Pan'/>
       
-      <FormLabel>Passwort</FormLabel>      
+      <BaseFormLabel>Passwort</BaseFormLabel>      
       <input name='password' v-model='password' @focus='inputIsFocused = true' type='password' class='login-input'/>
      
       <button type='submit' form='login-form' class='login-button-send'>Anmelden</button>
@@ -17,9 +17,6 @@
 </template>
 
 <script>
-import Heading from '../components/atoms/Heading'
-import FormLabel from '../components/atoms/FormLabel'
-import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
 import GET_TOKEN from '../graphql/auth/getToken.gql'
@@ -27,9 +24,7 @@ import GET_TOKEN from '../graphql/auth/getToken.gql'
 export default {
   name: 'login-screen',
   components: {
-    Heading,
-    FormLabel,
-    Whitespace
+
   },
   data () {
     return {

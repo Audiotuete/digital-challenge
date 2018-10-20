@@ -1,10 +1,10 @@
 
 <template>
   <div>
-    <Whitespace/>
-    <Heading :level="1" v-show='!inputIsFocused'>
+    <BaseWhitespace/>
+    <BaseHeading :level="1" v-show='!inputIsFocused'>
       Einem Projekt beitreten
-    </Heading>
+    </BaseHeading>
 
     <button v-show='!inputIsFocused' @click='showEnterCodeModal = true' class='register-project-button-send'>Projektpasswort eingeben</button>
 
@@ -12,27 +12,27 @@
     <div v-show='showEnterCodeModal' class='card '>
       <div class='modal-container'>
         <!-- Extract close button from heading -->
-        <Heading :level="1">
+        <BaseHeading :level="1">
           <button class='modal-header-icon' @click='showEnterCodeModal = false'>
             <i class='sl-icon icon-close'></i>
           </button>
           Projektpasswort eingeben
-        </Heading>
+        </BaseHeading>
 
         <input @keyup='maxInput' v-model='projectCode' autocomplete='off' class='modal-input' maxlength='7' placeholder='XXXXXXX'/>
-        <Paragraph>Das Projektpasswort erfährst du vom Projektersteller oder Projektmitgliedern</Paragraph>
+        <BaseParagraph>Das Projektpasswort erfährst du vom Projektersteller oder Projektmitgliedern</BaseParagraph>
         <button @click='joinProject()' class='register-project-button-send'>Projekt beitreten</button>
       </div>
     </div>
- <!-- Whitespace instead of custom Style -->
-    <Heading :level="1" style="margin-top: 3rem; margin-bottom: 0.25rem;">
+ <!-- BaseWhitespace instead of custom Style -->
+    <BaseHeading :level="1" style="margin-top: 3rem; margin-bottom: 0.25rem;">
       Neues Projekt erstellen
-    </Heading>
+    </BaseHeading>
     <form class='register-project-form' @submit.prevent='createProject()'>
-      <FormLabel>Projektname</FormLabel>
+      <BaseFormLabel>Projektname</BaseFormLabel>
       <input name='project-title' v-model='projectName' @focus='inputIsFocused = true' type='text' class='register-project-input' maxlength='28'/>
       
-      <FormLabel>Projektbeschreibung</FormLabel>      
+      <BaseFormLabel>Projektbeschreibung</BaseFormLabel>      
       <textarea class='register-project-input register-project-textarea' name='project-description' v-model='projectDescription' @focus='inputIsFocused = true' type='text' maxlength='80'/>
 
       <button type='submit' class='register-project-button-send'>Projekt erstellen</button>
@@ -42,11 +42,11 @@
     <div :class='{ /* Make card not dragble while making notes */ "darken-background": showCreateSuccesModal }'></div> 
       <div v-show='showCreateSuccesModal' class='card '>
         <div class='modal-container'>
-          <Heading :level="1">
+          <BaseHeading :level="1">
             Projekt erfolgreich erstellt
-          </Heading>
-          <Paragraph><strong>{{ projectName }}</strong></Paragraph>
-          <Paragraph>{{ projectDescription }}</Paragraph>
+          </BaseHeading>
+          <BaseParagraph><strong>{{ projectName }}</strong></BaseParagraph>
+          <BaseParagraph>{{ projectDescription }}</BaseParagraph>
           <div class='register-project-label register-project-label__code'>Project-Code</div>
           <div  class='register-project-code-display'>{{ projectCode }}</div>
           <button @click='goToProjectFeed()' class='register-project-button-send'>Weiter</button>
@@ -57,10 +57,6 @@
 </template>
 
 <script>
-import Heading from '../components/atoms/Heading'
-import Paragraph from '../components/atoms/Paragraph'
-import FormLabel from '../components/atoms/FormLabel'
-import Whitespace from '../components/layout/Whitespace'
 
 // GraphQL
 import CREATE_PROJECT from '../graphql/projects/createProject.gql'  
@@ -69,10 +65,7 @@ import JOIN_PROJECT from '../graphql/projects/joinProject.gql'
 export default {
   name: 'register-project-screen',
   components:{
-    Heading,
-    Paragraph,
-    FormLabel,
-    Whitespace
+    
   },
   data () {
     return {
@@ -312,45 +305,5 @@ export default {
 //   z-index: 900;
 // }
 
-.button-play {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-  border-radius: 10px;
-  height: 15.5vw;
-  width: 21vw;
-  border: none;
-  outline: none;
-  // color: #fff;
-  background-color: rgba(255, 255, 255, .9);
-
-  .fa-play {
-    color: $colorPrimary;
-    padding: 0.75vw 0 0 0.75vw;
-  }
-}
-
-.button-replay {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 6vh;
-  left: 6vw;
-  z-index: 100;
-  border-radius: 1vw;
-  height: 8vw;
-  width: 8vw;
-  border: none;
-  outline: none;
-  // color: #fff;
-  background-color: rgba(0, 0, 0, .5);
-
-  .fa-undo {
-    padding-top: 10%;
-    font-size: 5vw;
-  }
-}
 
 </style>

@@ -1,19 +1,19 @@
 <template>
   <div>
-    <Whitespace/>
+    <BaseWhitespace/>
     <div class='header'>
       <button class='header-icon' @click='back()'><i class='sl-icon icon-arrow-left'></i></button>
       {{projectTask.task.taskText}}
     </div>
     <form id='form' class='form'  @submit.prevent='sendData()'>
 
-      <FormLabel>1. Aktion</FormLabel>
+      <BaseFormLabel>1. Aktion</BaseFormLabel>
       <input name='action-1' v-model='action_1' @focus='inputIsFocused = true' type='text' class='input'>
       
-      <FormLabel>2. Aktion</FormLabel>
+      <BaseFormLabel>2. Aktion</BaseFormLabel>
       <input name='action-2' v-model='action_2' @focus='inputIsFocused = true' type='text' class='input'/>
 
-      <FormLabel>3. Aktion</FormLabel>
+      <BaseFormLabel>3. Aktion</BaseFormLabel>
       <input name='action-3' v-model='action_3' @focus='inputIsFocused = true' type='text' class='input'/>
       
       <button type='submit' form='form' class='button-send'>Abschicken</button>
@@ -22,17 +22,14 @@
 </template>
 
 <script>
-import Whitespace from '../layout/Whitespace'
-import FormLabel from '../atoms/FormLabel'
 
-
+// GraphQL
 import UPDATE_PROJECT_TASK_ACTION from '../../graphql/projectTasks/updateProjectTaskAction.gql'
 
 export default {
   name: 'task-action',
   components: {
-    Whitespace,
-    FormLabel
+
   },
   props: {
     projectTask: Object,

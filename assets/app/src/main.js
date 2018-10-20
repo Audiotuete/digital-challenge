@@ -7,14 +7,12 @@ import { ApolloLink } from 'apollo-link'
 import { setContext } from 'apollo-link-context'
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory'
 // import { withClientState } from 'apollo-link-state';
-
 import introspectionQueryResultData from './graphql/fragmentTypes.json'
-
 import VueApollo from 'vue-apollo'
 
 import App from './App.vue'
 import { router } from './routes'
-import { valConfig } from './validation.conf'
+import './components/atoms/_globals'
 
 
 // Create fragment matcher for fragmented Queries (... on "Type")
@@ -57,8 +55,8 @@ const apolloClient = new ApolloClient({
   cache: app_cache, 
   link: ApolloLink.from([
     authLink,
-    new HttpLink({uri: 'http://localhost:8000/graphql'})
-    // new HttpLink({uri: 'https://bwirken.org/graphql'})
+    // new HttpLink({uri: 'http://localhost:8000/graphql'})
+    new HttpLink({uri: 'https://bwirken.org/graphql'})
   ]),
   connectToDevTools: true,
 })

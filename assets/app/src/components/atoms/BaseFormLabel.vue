@@ -1,12 +1,12 @@
 <template>
-  <label>
+  <label class="label">
     <slot></slot>
   </label>
 </template>
 
 <script>
 export default {
-  name: 'form-label',
+  name: 'base-form-label',
   // props: {
   //   size: {
   //     type: Number,
@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  label {
+  .label {
     align-self: flex-start;
     font-size: 0.75rem;
     margin-top: 0.4rem;
