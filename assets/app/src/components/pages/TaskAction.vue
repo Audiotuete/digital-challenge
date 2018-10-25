@@ -1,22 +1,19 @@
 <template>
   <div>
     <BaseWhitespace/>
-    <div class='header'>
+    <BaseHeading :level='1'>
       <button class='header-icon' @click='back()'><i class='sl-icon icon-arrow-left'></i></button>
       {{projectTask.task.taskText}}
-    </div>
-    <form id='form' class='form'  @submit.prevent='sendData()'>
+    </BaseHeading>
+    <form id='form' @submit.prevent='sendData()'>
 
-      <BaseFormLabel>1. Aktion</BaseFormLabel>
-      <input name='action-1' v-model='action_1' @focus='inputIsFocused = true' type='text' class='input'>
+      <BaseInput :label="'1. Aktion'" v-model='action_1' @focus='inputIsFocused = true' type='text'/>
       
-      <BaseFormLabel>2. Aktion</BaseFormLabel>
-      <input name='action-2' v-model='action_2' @focus='inputIsFocused = true' type='text' class='input'/>
+      <BaseInput :label="'2. Aktion'" v-model='action_2' @focus='inputIsFocused = true' type='text'/>
 
-      <BaseFormLabel>3. Aktion</BaseFormLabel>
-      <input name='action-3' v-model='action_3' @focus='inputIsFocused = true' type='text' class='input'/>
+      <BaseInput :label="'3. Aktion'" v-model='action_3' @focus='inputIsFocused = true' type='text'/>
       
-      <button type='submit' form='form' class='button-send'>Abschicken</button>
+      <BaseButton type='submit' form='form'>Abschicken</BaseButton>
     </form>
   </div>
 </template>
@@ -83,55 +80,6 @@ export default {
 
 <style scoped lang='scss'>
 
-  .whiteroom {
-    height: 16vh;
-  }
-
-  .header {
-    display: flex;
-    text-align: center;
-    margin: 1.5rem 1rem 1rem 1rem;
-    font-size: 1.1rem;
-    font-weight: 300;
-  }
-
-  .input {
-    pointer-events: auto;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    height: 2.5rem;
-    margin-bottom: 0.2rem;
-    font-size: 0.9rem;
-    font-weight: 300;
-    padding-left: 0.75rem;
-    font-family: 'Open Sans';
-    box-sizing: border-box;
-    background: #FEFEFE;
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.25);
-    border-radius: 0.75vw;
-
-    &::placeholder {
-      color: #DDDDDD;
-    }
-  }
-
-  .button-send {
-    background: $colorPrimary;
-    border: none;
-    outline: none;
-    width: 60vw;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 1vh;
-    margin-top: 1rem;
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.25);
-  }
   .header-icon {
     position: absolute;
     left: 0.15rem;

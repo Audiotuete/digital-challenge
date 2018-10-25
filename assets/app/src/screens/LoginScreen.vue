@@ -4,13 +4,20 @@
     <BaseWhitespace/>
     <BaseHeading :level="1">Anmelden</BaseHeading>
     <form id='login-form' class='login-form'  @submit.prevent='login()'>
-      <BaseFormLabel>Nutzername</BaseFormLabel>
-      <input name='username' v-model='username' @focus='inputIsFocused = true' type='text' class='login-input' placeholder='Peter Pan'/>
+      <BaseInput
+      :label="'Nutzername'"
+      v-model='username' 
+      @focus='inputIsFocused = true' 
+      type='text' 
+      placeholder='Peter Pan'/>
       
-      <BaseFormLabel>Passwort</BaseFormLabel>      
-      <input name='password' v-model='password' @focus='inputIsFocused = true' type='password' class='login-input'/>
+      <BaseInput
+      :label="'Password'"
+      v-model='password' 
+      @focus='inputIsFocused = true' 
+      type='password'/>
      
-      <button type='submit' form='login-form' class='login-button-send'>Anmelden</button>
+      <BaseButton type='submit' form='login-form'>Anmelden</BaseButton>
     </form>
           <!-- <div class='login-show-button' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up login-show-question-icon'></i></div> -->
   </div>
@@ -35,6 +42,7 @@ export default {
   },
   methods: {
     login() {
+
       const theUsername = this.username
       const thePassword = this.password
 
@@ -83,53 +91,6 @@ export default {
     border-radius: 50%;
     border: 1px solid $colorPrimary;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.15);
-  }
-
-  .login-form {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 70vw;
-  }
-
-  .login-input {
-    pointer-events: auto;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    height: 2.5rem;
-    margin-top: 0.1rem;
-    font-size: 0.9rem;
-    font-weight: 300;
-    padding-left: 0.75rem;
-    font-family: 'Open Sans';
-    box-sizing: border-box;
-    background: #FEFEFE;
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.25);
-    border-radius: 0.75vw;
-
-    &::placeholder {
-      color: #DDDDDD;
-    }
-  }
-
-  .login-button-send {
-    background: $colorPrimary;
-    border: none;
-    outline: none;
-    width: 60vw;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 1vh;
-    margin-top: 1rem;
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.25);
   }
 
 </style>

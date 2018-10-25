@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import TaskProblem from '../components/tasks/TaskProblem'
-import TaskIdea from '../components/tasks/TaskIdea'
-import TaskAction from '../components/tasks/TaskAction'
+import TaskProblem from '../components/pages/TaskProblem'
+import TaskIdea from '../components/pages/TaskIdea'
+import TaskAction from '../components/pages/TaskAction'
 
 export default {
   name: 'task-screen',
@@ -19,9 +19,13 @@ export default {
     TaskAction},
   data () {
     return {
-      task: this.$route.params.projectTask,
-      tasktype: this.$route.params.projectTask.__typename,
+      task: {},
+      tasktype: ''
     }
+  },
+  mounted() {
+    this.task = this.$route.params.projectTask,
+    this.tasktype = this.$route.params.projectTask.__typename
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {

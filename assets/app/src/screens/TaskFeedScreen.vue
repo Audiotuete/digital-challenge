@@ -18,13 +18,11 @@
     </div>
 
     <a style='align-self: center;margin-top: 1rem;' href='https://plattform.bewirken.org'>
-    <button href='https://plattform.bewirken.org' type='submit' class='task-feed-button-send'>
-      Videos für euer Projekt
-    </button>
+    <BaseButton href='https://plattform.bewirken.org'>Videos für euer Projekt</BaseButton>
     </a>
     </div>
     <div class='show-challengeinfo-button' @click='goToChallengeInfo()'>
-      <i class='sl-icon icon-fire show-challengeinfo-button-icon'></i>
+      <i class='sl-icon icon-pin show-challengeinfo-button-icon'></i>
     </div>
 
   </div>
@@ -81,6 +79,7 @@ export default {
 
     &-icon {
       font-size: 1.9rem;
+      padding-left: 2px;
       color: #ffffff;
     }
   }

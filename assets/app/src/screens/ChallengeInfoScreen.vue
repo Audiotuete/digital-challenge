@@ -4,7 +4,9 @@
     <BaseWhitespace/>
     <BaseHeading :level='1'>
       Challenge Info
-      <button class='header-icon' @click='back()'><i class='sl-icon icon-arrow-left'></i></button>
+      <button class='header-icon' @click='back()'>
+        <i class='sl-icon icon-arrow-left'></i>
+      </button>
     </BaseHeading>
     <div class='info-container'>
 
@@ -21,9 +23,9 @@
       <div class='info-header'><i class='info-header-icon sl-icon icon-user-female' aria-hidden='true'/><span class='info-header-title'>Ansprechpartner*innen</span></div>
       <div class='info-contact' v-for='contactInfo in aChallenge.contactInfo' :key="contactInfo.username">
         <div> <!--  Flex Container Start  -->
-          <span class='info-contacts-item info-contacts-item__name'>{{contactInfo.username.charAt(0).toUpperCase() + contactInfo.username.slice(1)}}</span>
+          <span class='info-contacts-item info-contacts-item__name'>{{contactInfo.username.replace(/[._]/g, ' ')}}</span>
           <div v-show="contactInfo.phone" class='info-contacts-item'>
-            <span class='info-text'>{{contactInfo.phone}} <i class='info-contact-icon sl-icon icon-call-in' aria-hidden='true'/></span>
+            <span class='info-text'>{{contactInfo.phone}} <i class='info-contact-icon sl-icon icon-phone' aria-hidden='true'/></span>
           </div> 
           <div v-show="contactInfo.email" class='info-contacts-item info-contacts-item__no-top-margin'>
             <a :href="'mailto:'+contactInfo.email" ><span class='info-text'>{{contactInfo.email.toLowerCase()}} <i class='info-contact-icon sl-icon icon-envelope' aria-hidden='true'/></span></a>

@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import { apolloProvider } from '../main'
-
 import RegisterUserScreen from '../screens/RegisterUserScreen'
 import EnterChallengeScreen from '../screens/EnterChallengeScreen'
 import ChallengeInfoScreen from '../screens/ChallengeInfoScreen'
@@ -12,11 +10,27 @@ import RegisterProjectScreen from '../screens/RegisterProjectScreen'
 import TaskFeedScreen from '../screens/TaskFeedScreen'
 import TaskScreen from '../screens/TaskScreen'
 
-import TheNavbar from '../components/navbar/TheNavbar'
-import TheFooter from '../components/footer/TheFooter'
 
+// import TheNavbar from '../components/layout/navbar/TheNavbar'
+// import TheFooter from '../components/layout/footer/TheFooter'
+
+
+// const RegisterUserScreen = () => import('../screens/RegisterUserScreen')
+// const EnterChallengeScreen = () => import('../screens/EnterChallengeScreen')
+// const LoginScreen = () => import('../screens/LoginScreen')
+// const RegisterProjectScreen = () => import('../screens/RegisterProjectScreen')
+
+// const TaskFeedScreen = () => import(/* webpackChunkName: "tasks-group" */ '../screens/TaskFeedScreen')
+// const TaskScreen = () => import(/* webpackChunkName: "tasks-group" */ '../screens/TaskScreen')
+
+// const ChallengeInfoScreen = () => import( '../screens/ChallengeInfoScreen')
+
+// const TheNavbar = () => import('../components/navbar/TheNavbar')
+// const TheFooter = () => import('../components/footer/TheFooter')
+
+// GraphQL imports for router guards
+import { apolloProvider } from '../main'
 import CURRENT_USER from '../graphql/users/currentUser.gql'
-
 
 Vue.use(VueRouter)
 

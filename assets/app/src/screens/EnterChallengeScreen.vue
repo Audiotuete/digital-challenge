@@ -2,7 +2,7 @@
 <template>
 <div>
   <BaseWhitespace/>
-  <BaseHeading :level="1">Willkommen zur Projekt-Challenge-App</BaseHeading>
+  <BaseHeading :level="1">Willkommen zur Projekt Challenge App</BaseHeading>
   <BaseParagraph>Hier kannst du den Challenge-Code, welchen du während der Ideenschmiede erhälst, eingeben.</BaseParagraph>
   <input @input='maxInput()' v-model='inputValue' autocomplete='off' @focus='inputIsFocused = true' class='challenge-code-input' maxlength='5' placeholder='XXXXX'/>
   
@@ -10,7 +10,7 @@
   <BaseParagraph v-else>-</BaseParagraph>
 
   <!-- <div class='challenge-code-show-question' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up challenge-code-show-question-icon'></i></div> -->
-  <BaseButton @click.native='summitCode()'>Beitreten</BaseButton>
+  <BaseButton @click.native='submitCode()'>Beitreten</BaseButton>
   <div class='challenge-code-whiteroom'></div>
   <BaseParagraph>Wenn du schon einen Challenge-Account hast kannst du dich einfach direkt anmelden.</BaseParagraph>
   
@@ -123,22 +123,6 @@ export default {
     &::placeholder {
       color: #DDDDDD;
     }
-  }
-
-  .challenge-code-button-send {
-    background: $colorPrimary;
-    border: none;
-    outline: none;
-    width: 60vw;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 1vh;
-    margin-top: 1rem;
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.25);
   }
 
 </style>

@@ -1,18 +1,26 @@
 <template>
-  <button class='button'>
-    <slot></slot>
+  <button 
+    class='button'
+    v-bind="$attrs"
+    v-on="inputListeners"
+  >
+    <slot>-</slot>
   </button>
 </template>
 
 <script>
 export default {
   name: 'base-button',
-  // props: {
-  //   size: {
-  //     type: Number,
-  //     required: true
-  //   }
-  // }
+  inheritAttrs: true,
+  computed: {
+    inputListeners: function () {
+      var vm = this
+      return Object.assign({},
+        this.$listeners,
+        { click: function (event) {vm.$emit('click', event.target.value)} }
+      )
+    }
+  },
 }
 </script>
 
@@ -33,6 +41,7 @@ export default {
     margin-top: 1rem;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.25);
   }
+
 </style>
 
 

@@ -60,16 +60,6 @@ export default {
   padding: 0 3vw  5vh 3vw;
 }
 
-.form-error-text {
-  font-size: 0.7rem;
-  color: #E94F35;
-  text-align: center;
-}
-
-.form-error-field {
-  border: 1px solid #E94F35;
-}
-
 body {
   background-color: #ffffff;
   margin: 0;

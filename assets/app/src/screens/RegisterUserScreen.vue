@@ -6,66 +6,68 @@
       Deine Kontaktdaten für die Challenge
     </BaseHeading>
     <BaseParagraph v-show='!inputIsFocused'>Deine Daten werden nicht an Dritte weitergegeben und nach der Challenge automatisch gelöscht!</BaseParagraph>
+    
     <form class='register-user-form'  @submit.prevent='validateBeforeRegsiter()'>
+      <BaseInput
+        :label = "'Accountname'"
+        :validation="{'hasError': errors.has('Accountname') || errors.has('Accountname vergeben') }"
+        v-model='username'
+        v-validate='{ required: true, alpha_dash: true, min: 3 }'
+        data-vv-delay="800"
+        @focus='inputIsFocused = true'
+        @keyup='errors.remove("Accountname vergeben")'
+        type='text' 
+        name='Accountname' 
+        maxlength='15' 
+        placeholder='Peter'/>
+      <BaseInputError v-show="errors.has('Accountname')">{{ errors.first('Accountname') }}</BaseInputError>
+      <BaseInputError v-show="errors.has('Accountname vergeben')">{{ errors.first('Accountname vergeben') }}</BaseInputError>
 
-      <BaseFormLabel>Nutzername</BaseFormLabel>
-      <input
-      :class="{'register-user-input': true, 'form-error-field': errors.has('Nutzername') || errors.has('Nutzername vergeben') }"
-      v-model='username'
-      v-validate='{ required: true, alpha_dash: true, min: 3 }'
-      data-vv-delay="800"
-      @focus='inputIsFocused = true'
-      @keyup='errors.remove("Nutzername vergeben")'
-      type='text' 
-      name='Nutzername' 
-      maxlength='15' 
-      placeholder='Peter'/>
-      <span class="form-error-text" v-show="errors.has('Nutzername')">{{ errors.first('Nutzername') }}</span>
-      <span class="form-error-text" v-show="errors.has('Nutzername vergeben')">{{ errors.first('Nutzername vergeben') }}</span>
-
-
-      <BaseFormLabel>Mail-Adresse</BaseFormLabel>
-      <input
-        :class="{'register-user-input': true, 'form-error-field': errors.has('Mail-Adresse') }"
+      <BaseInput
+        :label = "'Mail-Adresse'"
+        :validation="{'hasError': errors.has('Mail-Adresse') }"
         v-model='email' 
         v-validate='{ required: true, email: true }'
         data-vv-delay="1200"
         @focus='inputIsFocused = true' 
         type='email'
         name='Mail-Adresse' 
-        placeholder='peter.pan@gmail.de'
-      />
-      <span class="form-error-text" v-show="errors.has('Mail-Adresse')">{{ errors.first('Mail-Adresse') }}</span>
+        placeholder='peter.pan@gmail.de'/>
+      <BaseInputError v-show="errors.has('Mail-Adresse')">{{ errors.first('Mail-Adresse') }}</BaseInputError>
 
-      <BaseFormLabel style='margin-top: 1rem'>Passwort</BaseFormLabel>
-      <input 
-        :class="{'register-user-input': true, 'form-error-field': errors.has('Passwort') }"
+      <BaseInput
+        :label = "'Passwort'"
+        :validation="{'hasError': errors.has('Passwort') }"
         v-model='password' 
         v-validate='{ required: true, min: 8 }'
         data-vv-delay="1200"
         @focus='inputIsFocused = true' 
         type='password' 
         name='Passwort' 
-        ref="Passwort"
-      />
-      <span class="form-error-text" v-show="errors.has('Passwort')">{{ errors.first('Passwort') }}</span>
+        ref="Passwort"/>
+      <BaseInputError v-show="errors.has('Passwort')">{{ errors.first('Passwort') }}</BaseInputError>
 
-      <BaseFormLabel>Passwort wiederholen</BaseFormLabel>
-      <input 
-        :class="{'register-user-input': true, 'form-error-field': errors.has('Passwort wiederholen') }"
+      <BaseInput
+        :label = "'Passwort wiederholen'"
+        :validation="{'hasError': errors.has('Passwort wiederholen') }"
         v-validate="'required|confirmed:Passwort'"
         data-vv-as='Passwort wiederholen'
         data-vv-delay="1200"
         v-model='passwordRepeat'
         @focus='inputIsFocused = true' 
         type='password'
-        name='Passwort wiederholen' 
-      />
-      <span class="form-error-text" v-show="errors.has('Passwort wiederholen')">{{ errors.first('Passwort wiederholen') }}</span>
+        name='Passwort wiederholen'/>
+      <BaseInputError v-show="errors.has('Passwort wiederholen')">{{ errors.first('Passwort wiederholen') }}</BaseInputError>
 
-      <button type='submit' class='register-user-button-send'>Account erstellen</button>
+      <BaseButton type='submit' >Account erstellen</BaseButton>
     </form>
-    <div class='register-user-show-button' v-show='inputIsFocused' @click='inputIsFocused = false'><i  class='sl-icon icon-arrow-up register-user-show-question-icon'></i></div>
+    
+    <div 
+      class='register-user-show-button' 
+      v-show='inputIsFocused' 
+      @click='inputIsFocused = false'>
+      <i  class='sl-icon icon-arrow-up register-user-show-question-icon'></i>
+    </div>
 
   </div>
 </template>
@@ -130,10 +132,10 @@ export default {
 
       }).catch((error) => {
         if(error.message == 'GraphQL error: Username already exists!') {
-          this.errors.remove('Nutzername vergeben')
+          this.errors.remove('Accountname vergeben')
           this.errors.add({
-            field: 'Nutzername vergeben',
-            msg: 'Nutzername leider schon vergeben'
+            field: 'Accountname vergeben',
+            msg: 'Accountname leider schon vergeben'
           })
         }
         // We restore the initial user input
@@ -207,44 +209,6 @@ export default {
     justify-content: center;
     align-items: center;
     width: 70vw;
-  }
-
-  .register-user-input {
-    pointer-events: auto;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    height: 2.5rem;
-    margin-top: 0.1rem;
-    font-size: 0.9rem;
-    font-weight: 300;
-    padding-left: 0.75rem;
-    font-family: 'Open Sans';
-    box-sizing: border-box;
-    background: #FEFEFE;
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.25);
-    border-radius: 0.75vw;
-
-    &::placeholder {
-      color: #DDDDDD;
-    }
-  }
-
-  .register-user-button-send {
-    background: $colorPrimary;
-    border: none;
-    outline: none;
-    width: 60vw;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 1vh;
-    margin-top: 1rem;
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.25);
   }
 
 </style>
